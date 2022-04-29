@@ -1,0 +1,15 @@
+---
+title: "Web Scraping with Functional Programming"
+author: "Anwesha Guha"
+date: "4/29/2022"
+output: html_document
+---
+
+Outline:
+
+1. Background
+2. Reading in data
+- use `map()`
+- use `safely()`
+3. Creating a workable dataframe from web data
+- basic data wrangling and manipulation
