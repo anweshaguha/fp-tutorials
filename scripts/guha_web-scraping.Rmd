@@ -13,3 +13,7 @@ Outline:
 - use `safely()`
 3. Creating a workable dataframe from web data
 - basic data wrangling and manipulation
+
+
+
+
