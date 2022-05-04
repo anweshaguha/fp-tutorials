@@ -69,14 +69,14 @@ surveydf_long %>%
   coord_flip() +
   scale_x_discrete() +
   scale_fill_viridis_d() +
-  labs(title = "How good is the education at your school?",
-       x = NULL,
+  labs(title = "To what extent do you agree with the following statements?",
+       y = "Percent of respondents",
        fill = NULL) +
   theme_minimal() +
   theme(axis.text.x = element_blank(),
         axis.title.x = element_blank(),
         panel.grid = element_blank(),
-        legend.position = "top")
+        legend.position = "bottom")
 
   
 
