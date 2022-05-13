@@ -1,0 +1,34 @@
+---
+title: "data_sim"
+author: "Errol Kaylor"
+date: "5/13/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Outline
+
+Overall goal: demonstrate ways to generate datasets for classroom use!
+
+Part 1: Mocking data based on existing data set (of numerical/character data) 
+- Load in data, and produce descriptive stats.
+- Create a list of the columns/data types that are you are looking to mock up.
+- Populate the list with mocked data, depending on the types. 
+- Loop through the process, depending on # of data sets needed. 
+- Demonstrate function that walks them through the process
+-- Simulating different types of data!
+- Mocking numerical data
+-- Distribution functions, lists
+- Mocking character data
+-- Use of stringi for character strings
+-- Generate strings of specific length/format
+- Mocking logical data
+
+
+```{r}
+
+```
+
