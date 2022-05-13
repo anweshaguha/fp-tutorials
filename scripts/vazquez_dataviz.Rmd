@@ -7,6 +7,7 @@ output: html_document
 
 ```{r setup, include=FALSE}
 library(tidyverse)
+library(purrr)
 ```
 
 ## 
@@ -15,32 +16,112 @@ library(tidyverse)
 
 # This is how I am generating data without a loop. I can loop the sample specification
 # across 5 variables and vary the probability wieghts. Parallel looping?
-q1 <- factor(sample(1:4, 100, replace = TRUE, prob = c(0.3, 0.3, 0.2, 0.1)),
-             levels = c(1,2,3,4),
-             labels = c("Strongly disagree","Disagree","Agree","Strongly agree"))
-q2 <- factor(sample(1:4, 100, replace = TRUE, prob = c(0.1, 0.2, 0.6, 0.1)),
-             levels = c(1,2,3,4),
-             labels = c("Strongly disagree","Disagree","Agree","Strongly agree"))
-q3 <- factor(sample(1:4, 100, replace = TRUE, prob = c(0.2, 0.4, 0.2, 0.2)),
-             levels = c(1,2,3,4),
-             labels = c("Strongly disagree","Disagree","Agree","Strongly agree"))
-q4 <- factor(sample(1:4, 100, replace = TRUE, prob = c(0.1, 0.2, 0.5, 0.2)),
-             levels = c(1,2,3,4),
-             labels = c("Strongly disagree","Disagree","Agree","Strongly agree"))
-q5 <- factor(sample(1:4, 100, replace = TRUE, prob = c(0.1, 0.3, 0.2, 0.4)),
-             levels = c(1,2,3,4),
-             labels = c("Strongly disagree","Disagree","Agree","Strongly agree"))
+likert_sim <- function(n , w1, w2, w3, w4) {
+  factor(sample(1:4,n,replace = TRUE, prob = c(w1, w2, w3, w4)),
+         levels = c(1,2,3,4),
+         labels = c("Strongly disagree","Disagree",
+                    "Agree","Strongly agree"))
+}
+#questions <- list("q1","q2","q3","q4","q5")
+
+#surveydf <- map(1:5, likert_sim)
+
+
+
+q1 <- likert(250,.25,.25,.25,.25)
+q2 <- likert(250,.10,.50,.15,.25)
+q3 <- likert(250,.25,.10,.50,.15)
+q4 <- likert(250,.30,.30,.10,.30)
+q5 <- likert(250,.39,.45,.15,.10)
 
 surveydf <- cbind(q1,q2,q3,q4,q5) %>%
   as_tibble() %>%
-  mutate(id = ids::random_id(100, 4))
+  mutate(id = ids::random_id(250, 4))
+
+# q1 <- factor(sample(1:4, 100, replace = TRUE, prob = c(0.3, 0.3, 0.2, 0.1)),
+#              levels = c(1,2,3,4),
+#              labels = c("Strongly disagree","Disagree","Agree","Strongly agree"))
+# q2 <- factor(sample(1:4, 100, replace = TRUE, prob = c(0.1, 0.2, 0.6, 0.1)),
+#              levels = c(1,2,3,4),
+#              labels = c("Strongly disagree","Disagree","Agree","Strongly agree"))
+# q3 <- factor(sample(1:4, 100, replace = TRUE, prob = c(0.2, 0.4, 0.2, 0.2)),
+#              levels = c(1,2,3,4),
+#              labels = c("Strongly disagree","Disagree","Agree","Strongly agree"))
+# q4 <- factor(sample(1:4, 100, replace = TRUE, prob = c(0.1, 0.2, 0.5, 0.2)),
+#              levels = c(1,2,3,4),
+#              labels = c("Strongly disagree","Disagree","Agree","Strongly agree"))
+# q5 <- factor(sample(1:4, 100, replace = TRUE, prob = c(0.1, 0.3, 0.2, 0.4)),
+#              levels = c(1,2,3,4),
+#              labels = c("Strongly disagree","Disagree","Agree","Strongly agree"))
+# 
+# surveydf <- cbind(q1,q2,q3,q4,q5) %>%
+#   as_tibble() %>%
+#   mutate(id = ids::random_id(100, 4))
 
 
 ```
 
+## First define the functions
+
 ```{r }
-# Create sample graph
-surveydf_long <- surveydf %>%
+
+#Define the 
+likertlevels <- c(1,2,3,4)
+likertlabs <- c("Strongly disagree","Disagree","Agree","Strongly agree")
+step1 <- function(df,mincol,maxcol,labels,levels) {
+  df %>%
+  pivot_longer(
+    cols = {{mincol}}:{{maxcol}},
+    names_to = "question",
+    values_to = "frequency") %>%
+  group_by(question,frequency) %>%
+    count(name = "n_answers") %>%
+  group_by(question) %>%
+  mutate(percent_answers = (n_answers / sum(n_answers))*100,
+         frequency = factor(frequency,
+                           levels = likertlevels,
+                           labels = likertlabs))
+}
+
+check <- step1(surveydf,q1,q5,likertlabs,likertlevels)
+
+graph_likert <- function(df) {
+  df %>%
+  ggplot(aes(x = question,
+             y = percent_answers,
+             fill = frequency)) + 
+  geom_bar(stat = "identity") +
+  geom_text(aes(label = abs(percent_answers)),
+            position = position_stack(vjust = 0.5),
+            color = "white",
+            fontface = "bold") +
+  coord_flip() +
+  scale_x_discrete() +
+  scale_fill_viridis_d() +
+  labs(title = "To what extent do you agree with the following statements?",
+       x = "Percent of respondents",
+       fill = NULL) +
+  theme_minimal() +
+  theme(axis.text.x = element_blank(),
+        axis.title.x = element_blank(),
+        panel.grid = element_blank(),
+        legend.position = "bottom")
+}
+
+
+#Apply the function
+step1(surveydf,q1,q5,likertlabs,likertlevels) %>%
+  graph_likert()
+
+
+
+
+
+
+
+
+
+surveydf %>%
   pivot_longer(
     cols = q1:q5,
     names_to = "question",
@@ -54,10 +135,7 @@ surveydf_long <- surveydf %>%
                            levels = c(1,2,3,4),
                            labels = c("Strongly disagree","Disagree","Agree","Strongly agree"))) %>%
   mutate(percent_answers = if_else(frequency %in% c("Strongly disagree", "Disagree"), -percent_answers, percent_answers)
-         )
-
-
-surveydf_long %>%
+         )  %>%
   ggplot(aes(x = question,
              y = percent_answers,
              fill = frequency)) + 
@@ -78,7 +156,50 @@ surveydf_long %>%
         panel.grid = element_blank(),
         legend.position = "bottom")
 
+```
+
+
+```{r }
+# Create sample graph
+survey_graph <- function(df,x,y) {
+ df %>%
+  pivot_longer(
+    cols = x:y,
+    names_to = "question",
+    values_to = "frequency"
+  ) %>%
+  group_by(question,frequency) %>%
+    count(name = "n_answers") %>%
+  group_by(question) %>%
+  mutate(percent_answers = (n_answers / sum(n_answers))*100,
+         frequency = factor(frequency,
+                           levels = c(1,2,3,4),
+                           labels = c("Strongly disagree","Disagree","Agree","Strongly agree"))) %>%
+  mutate(percent_answers = if_else(frequency %in% c("Strongly disagree", "Disagree"), -percent_answers, percent_answers)
+         )  %>%
+  ggplot(aes(x = question,
+             y = percent_answers,
+             fill = frequency)) + 
+  geom_col() +
+  geom_text(aes(label = abs(percent_answers)),
+            position = position_stack(vjust = 0.5),
+            color = "white",
+            fontface = "bold") +
+  coord_flip() +
+  scale_x_discrete() +
+  scale_fill_viridis_d() +
+  labs(title = "To what extent do you agree with the following statements?",
+       y = "Percent of respondents",
+       fill = NULL) +
+  theme_minimal() +
+  theme(axis.text.x = element_blank(),
+        axis.title.x = element_blank(),
+        panel.grid = element_blank(),
+        legend.position = "bottom")
+}
   
+
+survey_graph(surveydf,q1,q5)
 
 ```
 
