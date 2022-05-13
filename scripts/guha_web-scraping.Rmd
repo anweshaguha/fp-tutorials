@@ -8,12 +8,53 @@ output: html_document
 Outline:
 
 1. Background
+This blog post refers to and combines much of the work done by the following blogs but combines into an education setting:
+
+* [How to Get Twitter Data Using API, R bloggers](https://www.r-bloggers.com/2022/03/how-to-get-twitter-data-using-r/)
+* [A Guide to Analysing Tweets with R](https://towardsdatascience.com/a-guide-to-mining-and-analysing-tweets-with-r-2f56818fdd16)
+
 2. Reading in data
 - use `map()`
 - use `safely()`
-3. Creating a workable dataframe from web data
-- basic data wrangling and manipulation
+3. From data 
+- create a workable dataframe
+- sentiment analysis
 
+Prefer `rtweet` to `twitteR` because...
 
+```{r}
+api_key <- "Cb2EwIBUHB1hhAV6plEFTngOv"
 
+api_key_secret <- "US6sqyYMAhGhZRzqMxgGIP0RwaGTx7BczfFIoTGA3uuVvTEJGk"
 
+bearer_token <- "AAAAAAAAAAAAAAAAAAAAAH8ocgEAAAAA2DeHrEMmk3dx6YrDzciTfwswJG0%3DQV9sgviXxVOGbMCCaKlZND4nL7OrYKgfPHSbvrdb5CwtnwIrXp"
+```
+
+Load relevant libraries.
+```{r}
+library(pacman)
+p_load(httr, jsonlite, tidyverse, rtweet)
+```
+
+```{r}
+## authenticate via web browser
+token <- create_token(
+  app = "functionalprogramming",
+  consumer_key = api_key,
+  consumer_secret = api_key_secret)
+get_token()
+```
+
+Search Tweets: from last 6-9 days
+```{r}
+rt <- search_tweets("#DataScience", n = 100, include_rts = FALSE)
+```
+
+```{r}
+rt %>%
+  select(screen_name, text, favorite_count, retweet_count)
+```
+
+could split dataframe by group
+loop through dfs and fit model
+#maybe create a sentiment column, use as DV, split on IV [check it out](https://www.r-bloggers.com/2020/08/handling-errors-using-purrrs-possibly-and-safely/)
