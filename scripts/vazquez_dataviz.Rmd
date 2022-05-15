@@ -10,65 +10,115 @@ library(tidyverse)
 library(purrr)
 ```
 
-## 
+## Introduction 
 
+This tutorial will walk through an applied example to show how to simulate survey data
+and create a function to graph survey data using divergent bar charts. Creating this 
+function would allow the user to graph survey data to any of their liking!
+
+## Simulating data
+
+We begin by simulating some survey data. We will simulate responses to 5 questions that 
+use a likert item with a scale of one to four. To ease the simulation of the data, we 
+will create a function to generate this data. The function has 5 formals or arguments:
+  1. max - An integer that represents the maximum of the likert scale. Since the items we are developing
+  are on a 4 point scale, then we will add 4. If we wanted to simulate items on a 7 point
+  scale, then we would add a 7 to this argument. 
+  2. n - An integer that represents the total number observations that the user wishes to generate
+  3. weights - A list of weights that the user specifies to influence the frequency of certain responses.
+  The length of the vector should be equal to the max.
+  4. levels - A numeric vector that lists the numeric number tied to each response. It should start 
+  with 1 and end with the max number specified.
+  5. labels - A character vector with the labels attached to the numeric values.
+  
+The function below also provides an error message in case certain formals are not specified correctly. 
 ```{r simulate}
 
 # This is how I am generating data without a loop. I can loop the sample specification
 # across 5 variables and vary the probability wieghts. Parallel looping?
-likert_sim <- function(n , w1, w2, w3, w4) {
-  factor(sample(1:4,n,replace = TRUE, prob = c(w1, w2, w3, w4)),
-         levels = c(1,2,3,4),
-         labels = c("Strongly disagree","Disagree",
-                    "Agree","Strongly agree"))
+
+likert_sim <- function(max, n, weights, levels,labels) {
+  if ((length(levels) == length(labels)) & (length(weights) == max))  {
+  factor(sample(1:max, n, replace = TRUE, prob = weights),
+         levels = levels,
+         labels = labels)
+  } else {
+  stop("Are the length of your labels, levels, or weights equal to the likert item specified? ",  
+          " The scale is on a ", max, " point likert item scale. Did you add sufficient arguments?  ",
+         ", Number of weight arguments added was ",length(weights),
+         ", Number of labels arguments added was ", length(labels),
+         ", Number of level arguments added was, ", length(levels))
+  }
 }
-#questions <- list("q1","q2","q3","q4","q5")
 
-#surveydf <- map(1:5, likert_sim)
+```
 
+Using this function, we simulate the data for five questions which we call q1... to q5. 
+The sample scale we will simulate will be a 4 point agreement scale ranging from strongly 
+disagree to strongly agree. Before running the function, we define the levels and the labels. 
+Again, the lengths of each of these vectors should be similar.
 
+```{r }
+levels <- c(1,2,3,4)
+labels <- c("Strongly disagree", "Disagree", "Agree", "Strongly agree")
 
-q1 <- likert(250,.25,.25,.25,.25)
-q2 <- likert(250,.10,.50,.15,.25)
-q3 <- likert(250,.25,.10,.50,.15)
-q4 <- likert(250,.30,.30,.10,.30)
-q5 <- likert(250,.39,.45,.15,.10)
+```
 
+Next, we use the levels and labels vectors defined above and plug those in to the function. 
+Again, we generate 5 simulated responses with varying weights. 
+
+Note to peer reviewer: Ideas how to put this in a function format?
+
+```{r }
+q1 <- likert_sim(4,250, c(.20,.30,.25,.25),levels,labels)
+q2 <- likert_sim(4, 250, c(.10,.50,.15,.25),levels,labels)
+q3 <- likert_sim(4, 250, c(.25,.10,.50,.15), levels,labels )
+q4 <- likert_sim(4, 250, c(.30,.30,.10,.30), levels,labels)
+q5 <- likert_sim(4, 250, c(.39,.45,.15,.10), levels,labels)
+
+```
+
+After we simulate this data, we bind it together into a data frame and generate a random
+respone ID. The data is now ready to be graphed!
+
+```{r }
 surveydf <- cbind(q1,q2,q3,q4,q5) %>%
   as_tibble() %>%
   mutate(id = ids::random_id(250, 4))
 
-# q1 <- factor(sample(1:4, 100, replace = TRUE, prob = c(0.3, 0.3, 0.2, 0.1)),
-#              levels = c(1,2,3,4),
-#              labels = c("Strongly disagree","Disagree","Agree","Strongly agree"))
-# q2 <- factor(sample(1:4, 100, replace = TRUE, prob = c(0.1, 0.2, 0.6, 0.1)),
-#              levels = c(1,2,3,4),
-#              labels = c("Strongly disagree","Disagree","Agree","Strongly agree"))
-# q3 <- factor(sample(1:4, 100, replace = TRUE, prob = c(0.2, 0.4, 0.2, 0.2)),
-#              levels = c(1,2,3,4),
-#              labels = c("Strongly disagree","Disagree","Agree","Strongly agree"))
-# q4 <- factor(sample(1:4, 100, replace = TRUE, prob = c(0.1, 0.2, 0.5, 0.2)),
-#              levels = c(1,2,3,4),
-#              labels = c("Strongly disagree","Disagree","Agree","Strongly agree"))
-# q5 <- factor(sample(1:4, 100, replace = TRUE, prob = c(0.1, 0.3, 0.2, 0.4)),
-#              levels = c(1,2,3,4),
-#              labels = c("Strongly disagree","Disagree","Agree","Strongly agree"))
-# 
-# surveydf <- cbind(q1,q2,q3,q4,q5) %>%
-#   as_tibble() %>%
-#   mutate(id = ids::random_id(100, 4))
-
-
 ```
 
-## First define the functions
+## Create a function to graph the data
+
+Now that we have the data simulated, we are ready to graph. In order to create a divergent
+horizontal bar chart, we need to take on two steps. First, we need to transform the data 
+so that it summarizes mean responses and it is in a format that allows for graphing in bar 
+format. This means that we need to summarize and pivot the data in a long format. After we 
+summarize and prep the data, we need to actually use ggplot to graph the data. For this reason,
+we will break the task and create two seperate functions, and then apply those two functions
+together to graph the information.
+
+To begin, we will create a function that collapses and pivots the data. The function
+has 4 arguments:
+  1. df - specifies the data frame to be used,
+  2. cols - is a list of the name of the columns we wish to include,
+  3. labels - Labels of the responses
+  4. - levels - Numeric values of the responses
+
+
+*Note to reviewer, is there a way to add a vector of columns to the function instead of a 
+range as currently specified. That way, the argument within pivot_longer cols will be a list
+insead of a range. It might be that the columns are not in order so adding
+a vector of columns would be better. However, I am having trouble making that happen. 
 
 ```{r }
 
 #Define the 
 likertlevels <- c(1,2,3,4)
 likertlabs <- c("Strongly disagree","Disagree","Agree","Strongly agree")
-step1 <- function(df,mincol,maxcol,labels,levels) {
+cols <- c(q1,q2,q3,q4,q5)
+
+summ_likert <- function(df,mincol,maxcol,labels,levels) {
   df %>%
   pivot_longer(
     cols = {{mincol}}:{{maxcol}},
@@ -79,12 +129,20 @@ step1 <- function(df,mincol,maxcol,labels,levels) {
   group_by(question) %>%
   mutate(percent_answers = (n_answers / sum(n_answers))*100,
          frequency = factor(frequency,
-                           levels = likertlevels,
-                           labels = likertlabs))
+                           levels = levels,
+                           labels = labels))
 }
 
-check <- step1(surveydf,q1,q5,likertlabs,likertlevels)
+head(summ_likert(surveydf,q1,q5,labels,levels))
+```
 
+
+Next, we define a function to graph the data. The function has two arguments
+  1. df - is the data frame,
+  2. q_labels - Question labels (to be added and defined)
+
+Note to reviewer: Still working on developing this visual.
+```{r }
 graph_likert <- function(df) {
   df %>%
   ggplot(aes(x = question,
@@ -108,22 +166,31 @@ graph_likert <- function(df) {
         legend.position = "bottom")
 }
 
+```
 
-#Apply the function
-step1(surveydf,q1,q5,likertlabs,likertlevels) %>%
+
+## Apply the function
+
+Lastly, we apply the function
+```{r }
+summ_likert(surveydf,q1,q5,labels,levels) %>%
   graph_likert()
 
 
+```
+
+
+ **Note to reviewer, the code below are notes to help develop the code, no need
+to review/evaluate**
 
 
 
 
 
-
-
+```{r, include = FALSE,evaluate = FALSE }
 surveydf %>%
   pivot_longer(
-    cols = q1:q5,
+    cols = c(q1,q2,q3,q4,q5),
     names_to = "question",
     values_to = "frequency"
   ) %>%
@@ -159,47 +226,47 @@ surveydf %>%
 ```
 
 
-```{r }
+```{r, include = FALSE,evaluate = FALSE }
 # Create sample graph
-survey_graph <- function(df,x,y) {
- df %>%
-  pivot_longer(
-    cols = x:y,
-    names_to = "question",
-    values_to = "frequency"
-  ) %>%
-  group_by(question,frequency) %>%
-    count(name = "n_answers") %>%
-  group_by(question) %>%
-  mutate(percent_answers = (n_answers / sum(n_answers))*100,
-         frequency = factor(frequency,
-                           levels = c(1,2,3,4),
-                           labels = c("Strongly disagree","Disagree","Agree","Strongly agree"))) %>%
-  mutate(percent_answers = if_else(frequency %in% c("Strongly disagree", "Disagree"), -percent_answers, percent_answers)
-         )  %>%
-  ggplot(aes(x = question,
-             y = percent_answers,
-             fill = frequency)) + 
-  geom_col() +
-  geom_text(aes(label = abs(percent_answers)),
-            position = position_stack(vjust = 0.5),
-            color = "white",
-            fontface = "bold") +
-  coord_flip() +
-  scale_x_discrete() +
-  scale_fill_viridis_d() +
-  labs(title = "To what extent do you agree with the following statements?",
-       y = "Percent of respondents",
-       fill = NULL) +
-  theme_minimal() +
-  theme(axis.text.x = element_blank(),
-        axis.title.x = element_blank(),
-        panel.grid = element_blank(),
-        legend.position = "bottom")
-}
-  
-
-survey_graph(surveydf,q1,q5)
+# survey_graph <- function(df,x,y) {
+#  df %>%
+#   pivot_longer(
+#     cols = x:y,
+#     names_to = "question",
+#     values_to = "frequency"
+#   ) %>%
+#   group_by(question,frequency) %>%
+#     count(name = "n_answers") %>%
+#   group_by(question) %>%
+#   mutate(percent_answers = (n_answers / sum(n_answers))*100,
+#          frequency = factor(frequency,
+#                            levels = c(1,2,3,4),
+#                            labels = c("Strongly disagree","Disagree","Agree","Strongly agree"))) %>%
+#   mutate(percent_answers = if_else(frequency %in% c("Strongly disagree", "Disagree"), -percent_answers, percent_answers)
+#          )  %>%
+#   ggplot(aes(x = question,
+#              y = percent_answers,
+#              fill = frequency)) + 
+#   geom_col() +
+#   geom_text(aes(label = abs(percent_answers)),
+#             position = position_stack(vjust = 0.5),
+#             color = "white",
+#             fontface = "bold") +
+#   coord_flip() +
+#   scale_x_discrete() +
+#   scale_fill_viridis_d() +
+#   labs(title = "To what extent do you agree with the following statements?",
+#        y = "Percent of respondents",
+#        fill = NULL) +
+#   theme_minimal() +
+#   theme(axis.text.x = element_blank(),
+#         axis.title.x = element_blank(),
+#         panel.grid = element_blank(),
+#         legend.position = "bottom")
+# }
+#   
+# 
+# survey_graph(surveydf,q1,q5)
 
 ```
 
