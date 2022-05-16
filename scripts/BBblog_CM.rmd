@@ -1,0 +1,64 @@
+---
+title: "**Building Blocks of Functional Programming**"
+author: "by Cassie Malcom"
+date: "5/6/2022"
+output: 
+  html_document:
+    css: style.css
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(pacman)
+
+pacman::p_load(purrr, tidyverse, repurrrsive, r2symbols, emoji)
+```
+
+![](/Users/cassiemalcom/Desktop/CM2020/22_Spring Term Classes/EDLD 653_DS3/EDLD653_r/Lego/legos.jpg)
+
+Hello, and welcome - I assume you are here because you want to learn more about data science and in particular functional programming. This blog is designed to help you proceed on your data science path by providing an introduction to the basic building blocks of functional programming. We'll be working with a freely available data set on Legos&copy;, which you can find here https://www.kaggle.com/datasets/rtatman/lego-database?resource=download.
+
+Let's start by loading the following packages: purrr, tidyverse, and repurrrsive. Take a moment to use ?package name to find out what each package does.
+
+Next we need to set up a directory for the csv files that we will be using.
+```{r}
+BBdata_dir <- "/Users/cassiemalcom/Desktop/CM2020/22_Spring Term Classes/EDLD 653_DS3/EDLD653_r/Lego"
+```
+
+I've already prepped two of the files for our use today by making sure there is an ID column that matches. We can see what the csv files are by listing them and using regexp to exclude any non-csv files.
+```{r}
+BBcsv <- fs::dir_ls(BBdata_dir, regexp = "\\.csv$")
+
+BBcsv
+```
+
+Next we'll use the purrr package's map_df function to return dataframe. The map_df function does this by running read_csv on each file which are piped to the rbind function to reduce the files to one large dataframe. 
+```{r}
+BBdf <- BBcsv %>% 
+  map_df(read_csv)
+
+head(BBdf)
+```
+
+Let's convert our dataframe into a list. Lists can very helpful as they are vectors (but NOT atomic 🤯 ones!) that allow each element to be of a different type (i.e., integer, double, logical, character).
+```{r}
+BBlist <- as.list(BBdf)
+```
+
+
+Let's check and see if we have any missing values in our list.
+```{r}
+is.na(BBlist)
+```
+
+What if we want to look at a particular column of our list?
+```{r}
+# BBlist[ , 2] #still working on this error
+```
+
+Going back to our dataframe we can try splitting it in case we want two smaller data sets.
+```{r}
+#still working through this chunk
+```
+
