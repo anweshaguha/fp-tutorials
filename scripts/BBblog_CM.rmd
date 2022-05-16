@@ -15,7 +15,7 @@ library(pacman)
 pacman::p_load(purrr, tidyverse, repurrrsive, r2symbols, emoji)
 ```
 
-![](/Lego)
+![](../Lego/legos.jpg)
 
 Hello, and welcome - I assume you are here because you want to learn more about data science and in particular functional programming. This blog is designed to help you proceed on your data science path by providing an introduction to the basic building blocks of functional programming. We'll be working with a freely available data set on Legos&copy;, which you can find here https://www.kaggle.com/datasets/rtatman/lego-database?resource=download.
 
