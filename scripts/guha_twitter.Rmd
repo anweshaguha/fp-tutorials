@@ -16,7 +16,7 @@ RQ: Does sentiment
 * [A Guide to Analysing Tweets with R](https://towardsdatascience.com/a-guide-to-mining-and-analysing-tweets-with-r-2f56818fdd16)
 
 [none of the code here is run due API restrictions]
-
+t
 **1.1: Set up Dev account in Twitter**
 ```{r eval=FALSE, echo=TRUE}
 api_key <- "XXXXXX"
@@ -63,11 +63,13 @@ I'll go ahead and load relevant libraries and the csv file created from Step 1 h
 ```{r}
 library(pacman)
 library(readr)
+library(here)#looks like the read_csv was hardcoded
+library(textdata)#needed this too
 p_load(httr, jsonlite, tidyverse, rtweet)
 ```
 
 ```{r}
-crt_tweet <- read_csv("~/Documents/r_projects/edld653-22/fp_collab/fp-tutorials/data/crt_tweets.csv")
+crt_tweet <- read_csv(here("data/crt_tweets.csv")) #changd this
 ```
 
 **Explore source variable**
