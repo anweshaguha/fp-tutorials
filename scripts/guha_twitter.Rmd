@@ -38,11 +38,12 @@ token <- create_token(
   consumer_secret = api_key_secret,
   access_token = access_token,
   access_secret = access_token_secret)
+
 ```
 
 **1.2: Save the data you are interested in**
 
-I am looking at the hashtag "CRT" or culturally relevant pedagogy. Note: the Twitter API only returns tweets from the last 6-9 days. As a result, the 18000-tweet request was not met; only 1567 tweets exist for that time window.
+I am looking at the hashtag "CRT" or culturally relevant pedagogy. Note: the Twitter API only returns tweets from the last 6-9 days. As a result, the 18,000-tweet request was not met; only 1,567 tweets exist for that time window.
 
 If you would like more comprehensive coverage, you can apply on the developer website -- though more project details will be required. I will keep the limited number for the sake of this tutorial.
 
@@ -67,7 +68,7 @@ p_load(httr, jsonlite, tidyverse, rtweet)
 ```
 
 ```{r}
-crt_tweet <- read_csv("~/Documents/r_projects/edld653-22/fp_collab/fp-tutorials/data/crt_tweets.csv")
+crt_tweet <- read_csv(here("data", "crt_tweets.csv"))
 ```
 
 **Explore source variable**
@@ -92,7 +93,7 @@ Better variable to work with:
 table(crt_tweet$source2)
 ```
 
-Say we wanted to create models for each of these groups. One way could be to create a dataframe for each group and fit a linear model. 
+Say we wanted to create models for each of these groups. One way could be to create a data frame for each group and fit a linear model. 
 
 ```{r}
 twt_split <- crt_tweet %>% 
@@ -100,13 +101,14 @@ twt_split <- crt_tweet %>%
 ```
 
 ```{r}
-posslm1 = possibly(.f = lm, otherwise = "Error")
+posslm1 <- possibly(.f = lm, otherwise = "Error")
 
-map(twt_split, ~posslm1(favorite_count ~ source2, data = .x) )
+map(twt_split, ~posslm1(favorite_count ~ source2, data = .x))
 ```
 
 ```{r}
-safelm = safely(.f = lm)
+safelm <- safely(.f = lm)
+
 map(twt_split, ~safelm(favorite_count ~ source2, data = .x) )
 ```
 ^^ I know these above are more artificial uses, but I am still getting errors in running this code. I can't seem to extract x = source2 and y = favorite_count
@@ -133,7 +135,8 @@ sentiment$word <- NULL
 sentiment$screen_name <- NULL
 
 #get nearest hour of time for plot
-sentiment$hour <- format(round(sentiment$created_at, units="hours"), format="%H:%M")
+sentiment$hour <- format(round(sentiment$created_at, units = "hours"), 
+                         format = "%H:%M")
 ```
 
 ```{r}
