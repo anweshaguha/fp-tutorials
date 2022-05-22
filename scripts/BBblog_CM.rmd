@@ -30,6 +30,8 @@ I've already prepped two of the files for our use today by making sure there is 
 ```{r}
 BBcsv <- fs::dir_ls(BBdata_dir, regexp = "\\.csv$")
 
+#RG this did not load for me, maybe use here:: to make it more user friendly
+
 BBcsv
 ```
 
