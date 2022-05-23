@@ -51,6 +51,7 @@ crt_tweets <- search_tweets("#CRT",
                     n = 18000, 
                     include_rts = FALSE)
 ```
+Anisha: May want to comment out 
 
 ```{r eval=FALSE, echo=TRUE}
 write_csv(crt_tweets, "~/Documents/r_projects/edld653-22/fp_collab/fp-tutorials/data/crt_tweets.csv")
@@ -63,8 +64,11 @@ I'll go ahead and load relevant libraries and the csv file created from Step 1 h
 ```{r}
 library(pacman)
 library(readr)
+library(textdata)
 p_load(httr, jsonlite, tidyverse, rtweet)
 ```
+
+Anisha: This may not be correct directory for everyone. I manually read csv from data folder
 
 ```{r}
 crt_tweet <- read_csv("~/Documents/r_projects/edld653-22/fp_collab/fp-tutorials/data/crt_tweets.csv")
@@ -99,10 +103,13 @@ twt_split <- crt_tweet %>%
   split(crt_tweet$source2)
 ```
 
+Anisha: What variables do you want to model? Since you already have the data split by source2, source2 will have the same value for all data points in each model. If you want the relationship between favorite_count and source2, I'm not sure why you need to split the data.
+
 ```{r}
 posslm1 = possibly(.f = lm, otherwise = "Error")
 
 map(twt_split, ~posslm1(favorite_count ~ source2, data = .x) )
+
 ```
 
 ```{r}
