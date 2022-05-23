@@ -68,6 +68,9 @@ p_load(httr, jsonlite, tidyverse, rtweet)
 
 ```{r}
 crt_tweet <- read_csv("~/Documents/r_projects/edld653-22/fp_collab/fp-tutorials/data/crt_tweets.csv")
+
+# here:here can be helpful.
+crt_tweet <- read.csv( here::here("data", "crt_tweets.csv"))
 ```
 
 **Explore source variable**
