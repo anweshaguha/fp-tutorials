@@ -24,6 +24,9 @@ Let's start by loading the following packages: purrr, tidyverse, and repurrrsive
 Next we need to set up a directory for the csv files that we will be using.
 ```{r}
 BBdata_dir <- "/Users/cassiemalcom/Desktop/CM2020/22_Spring Term Classes/EDLD 653_DS3/EDLD653_r/Lego"
+
+# here::here can be helpful for reproducibility purposes.
+here::here("EDLD653_r/lego")
 ```
 
 I've already prepped two of the files for our use today by making sure there is an ID column that matches. We can see what the csv files are by listing them and using regexp to exclude any non-csv files.
