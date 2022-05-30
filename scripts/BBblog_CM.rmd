@@ -17,9 +17,14 @@ pacman::p_load(purrr, tidyverse, repurrrsive, r2symbols, emoji)
 
 ![](../Lego/legos.jpg)
 
-Hello, and welcome - I assume you are here because you want to learn more about data science and in particular functional programming. This blog is designed to help you proceed on your data science path by providing an introduction to the basic building blocks of functional programming. We'll be working with a freely available data set on Legos&copy;, which you can find here https://www.kaggle.com/datasets/rtatman/lego-database?resource=download.
+Hello, and welcome - I assume you are here because you want to learn more about 
+data science and in particular functional programming. This blog is designed to 
+help you proceed on your data science path by providing an introduction to the 
+basic building blocks of functional programming. We'll be working with a freely available data set on Legos&copy;, which you can find here https://www.kaggle.com/datasets/rtatman/lego-database?resource=download.
 
-Let's start by loading the following packages: purrr, tidyverse, and repurrrsive. Take a moment to use ?package name to find out what each package does.
+Let's start by loading the following packages: purrr, tidyverse, and 
+repurrrsive. Take a moment to use ?package name to find out what each package 
+does.
 
 Next we need to set up a directory for the csv files that we will be using.
 ```{r}
@@ -33,31 +38,96 @@ BBcsv <- fs::dir_ls(BBdata_dir, regexp = "\\.csv$")
 BBcsv
 ```
 
-Next we'll use the purrr package's map_df function to return dataframe. The map_df function does this by running read_csv on each file which are piped to the rbind function to reduce the files to one large dataframe. 
+Next we'll use one of the base functions in R, lapply, to return  a list. The 
+lapply function is one of the least restrictive in terms of output within the 
+apply family of functions. Notice that our two csv files are being combined 
+into one vector based on the color_id column.
 ```{r}
-BBdf <- BBcsv %>% 
-  map_df(read_csv)
+BBlist <- BBcsv %>% 
+  lapply(read_csv) %>%
+  reduce(full_join, by = "color_id")
+
+head(BBlist)
+```
+
+We can confirm that this is a list with the typeof function. Lists can be very 
+helpful as they are vectors (but NOT atomic 🤯 ones!) that allow each element 
+to be of a different type (i.e., integer, double, logical, character).
+```{r}
+typeof(BBlist)
+```
+
+If we want to know the structure of our list we can use the below function to
+see our list's elements.
+```{r}
+str(BBlist)
+```
+
+What if we want to look at a particular row and column [row, column] of our 
+list?
+```{r}
+BBlist[5, 2]
+```
+
+Let's check and see if we have any missing values in our list.
+```{r}
+any(is.na(BBlist))
+```
+
+Since there are NAs in our list we can determine their position with the 
+following code.
+```{r}
+which(is.na(BBlist))
+```
+
+Now let's convert our list into a dataframe. 
+```{r}
+BBdf <- data.frame(BBlist)
 
 head(BBdf)
 ```
 
-Let's convert our dataframe into a list. Lists can very helpful as they are vectors (but NOT atomic 🤯 ones!) that allow each element to be of a different type (i.e., integer, double, logical, character).
+Most of the time we have to look at individual building blocks before we can 
+proceed to solving larger functional programming problems. Let's start by 
+determining the the number of unique times each color appears. The n column in 
+count_colors dataframe below shows on how many different parts a color appears.
 ```{r}
-BBlist <- as.list(BBdf)
+count_colors <- count(BBdf, name)
+
+head(count_colors)
+```
+
+```{r}
+map(6, rnorm)
+```
+
+How about determining the unique amount of each variable in our dataframe? To do
+this we'll use our first functional, which is the map function of the purrr 
+package. A functional is basically a type of function whose input is also a 
+function and whose output is a vector.
+
+Note that purrr uses less code by using the ~ symbol to take the place of 
+function(x), which is often used with lapply, with .x as the placeholder for the
+thing being looped over. In this case each variable is being looped over.
+```{r}
+map(BBdf, ~length(unique(.x)))
+```
+
+Thinking back to our variables, the variable inventory_id was shown as type 
+double, which is numeric. This is not very meaningful for this variable as an id
+is a kind of label and we shouldn't try to find a mean or other descriptive 
+statistic on it. Let's convert this variable to type character using a variation
+of the map function.
+```{r}
+BBl_chr <- BBlist %>%
+  map_chr(coefficients, 6)
+
+BBl_chr
 ```
 
 
-Let's check and see if we have any missing values in our list.
-```{r}
-is.na(BBlist)
-```
-
-What if we want to look at a particular column of our list?
-```{r}
-# BBlist[ , 2] #still working on this error
-```
-
-Going back to our dataframe we can try splitting it in case we want two smaller data sets.
+Going back to our dataframe we can try splitting it in case we want two smaller 
+data sets.
 ```{r}
 #still working through this chunk
 ```
