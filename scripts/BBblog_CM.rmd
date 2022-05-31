@@ -136,6 +136,15 @@ my_function <- function(x) {Percentage = (x/sum(x))*100; format(round(Percentage
 my_function(count_colors$n)
 ```
 
+If we want to check that our function is working correctly we can use a data 
+point (let's check the second data point for color Aqua) and manually determine 
+the corresponding percentage.
+```{r}
+(96/580255)*100
+```
+Our function worked! The above number when rounded is 0.02, which is the second 
+percentage.
+
 That wraps up our introduction to functional programming! In the next parts of 
 the blog you'll learn more about functions and how to perform more complex 
 functional programming.
