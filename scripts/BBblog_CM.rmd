@@ -41,7 +41,9 @@ BBcsv
 Next we'll use one of the base functions in R, lapply, to return  a list. The 
 lapply function is one of the least restrictive in terms of output within the 
 apply family of functions. Notice that our two csv files are being combined 
-into one vector based on the color_id column.
+into one vector based on the color_id column. The function reduce from the purrr
+package allows us to join the csv files on a key, which in this case is 
+"color_id".
 ```{r}
 BBlist <- BBcsv %>% 
   lapply(read_csv) %>%
@@ -80,11 +82,27 @@ following code.
 which(is.na(BBlist))
 ```
 
-Now let's convert our list into a dataframe. 
+Now let's determine an artificial mean for our data set. To do this we'll use 
+our first functional, which is the map_chr function of the purrr package. A 
+functional is basically a type of function whose input is also a function and 
+whose output is a vector. In this case the function is mean, which will return 
+the mean of each inventory_id. Using map_chr ensures that the output in the new 
+column is of type character. Note that members of the map family return a 
+dataframe.
 ```{r}
-BBdf <- data.frame(BBlist)
+BBdf <- BBlist %>% 
+  mutate(average = map_chr(inventory_id, mean))
 
 head(BBdf)
+```
+
+How about determining the unique amount of each variable in our dataframe? We 
+can use another functional! Note that purrr uses less code by using the ~ symbol 
+to take the place of function(x), which is often used with lapply, with .x as 
+the placeholder for the thing being looped over. In this case each variable is 
+being looped over.
+```{r}
+map(BBdf, ~length(unique(.x)))
 ```
 
 Most of the time we have to look at individual building blocks before we can 
@@ -97,38 +115,29 @@ count_colors <- count(BBdf, name)
 head(count_colors)
 ```
 
+Second, we can use the tally function to find the total number of parts when you consider color as a part variation. We can use this number later to test if the 
+first function we are about to write is working correctly.
 ```{r}
-map(6, rnorm)
+count_colors %>%
+  tally(n)
 ```
 
-How about determining the unique amount of each variable in our dataframe? To do
-this we'll use our first functional, which is the map function of the purrr 
-package. A functional is basically a type of function whose input is also a 
-function and whose output is a vector.
-
-Note that purrr uses less code by using the ~ symbol to take the place of 
-function(x), which is often used with lapply, with .x as the placeholder for the
-thing being looped over. In this case each variable is being looped over.
+Our first function, super exciting! Here is an overview of the parts of the 
+below function, which is built to return a percentage.
+*The function's name is my_function
+*Percentage is an object that is later printed with its second usage
+*An argument x is found in the formal component of (x)
+*The body of the function is found between the {}
+*The function format allows us to remove scientific notation with = F
+*The function round allows our output to be limited to two decimal places
 ```{r}
-map(BBdf, ~length(unique(.x)))
+my_function <- function(x) {Percentage = (x/sum(x))*100; format(round(Percentage, 2), scientific = F)}
+
+my_function(count_colors$n)
 ```
 
-Thinking back to our variables, the variable inventory_id was shown as type 
-double, which is numeric. This is not very meaningful for this variable as an id
-is a kind of label and we shouldn't try to find a mean or other descriptive 
-statistic on it. Let's convert this variable to type character using a variation
-of the map function.
-```{r}
-BBl_chr <- BBlist %>%
-  map_chr(coefficients, 6)
+That wraps up our introduction to functional programming! In the next parts of 
+the blog you'll learn more about functions and how to perform more complex 
+functional programming.
 
-BBl_chr
-```
-
-
-Going back to our dataframe we can try splitting it in case we want two smaller 
-data sets.
-```{r}
-#still working through this chunk
-```
 
