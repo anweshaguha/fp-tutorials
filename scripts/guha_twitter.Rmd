@@ -153,7 +153,8 @@ ggplot(pivot[-1,], aes(x = hour, y = sentiment)) +
        subtitle = paste0(pivot$hour[2],' - ',pivot$hour[nrow(pivot)],' on ', format(sentiment$created_at[1], '%d %B %Y')),
        x = 'Date', 
        y = 'Sentiment', 
-       caption = 'Source: Twitter API')
+       caption = 'Source: Twitter API')+
+  theme(axis.text.x = element_text(angle=45))
 ```
 
 [Next step: do sentiment graphs by group]
