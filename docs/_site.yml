@@ -1,0 +1,16 @@
+name: "fp_website"
+title: "Functional Programming in R"
+
+description: |
+  Functional Programming in R
+output_dir: "docs"
+navbar:
+  right:
+    - text: "Home"
+      href: index.html
+    - text: "Visualizing Data"
+      href: vazquez_dataviz.html
+    - text: "Working with Twitter"
+      href: guha_twitter.html
+      
+output: distill::distill_article
