@@ -8,6 +8,7 @@ output: html_document
 ```{r setup, include=FALSE}
 library(tidyverse)
 library(purrr)
+library(RColorBrewer)
 ```
 
 ## Introduction 
@@ -118,6 +119,8 @@ likertlevels <- c(1,2,3,4)
 likertlabs <- c("Strongly disagree","Disagree","Agree","Strongly agree")
 cols <- c(q1,q2,q3,q4,q5)
 
+likertlabs[1]
+
 summ_likert <- function(df,mincol,maxcol,labels,levels) {
   df %>%
   pivot_longer(
@@ -127,13 +130,15 @@ summ_likert <- function(df,mincol,maxcol,labels,levels) {
   group_by(question,frequency) %>%
     count(name = "n_answers") %>%
   group_by(question) %>%
-  mutate(percent_answers = (n_answers / sum(n_answers))*100,
+  mutate(percent_answers = round((n_answers / sum(n_answers))*100, 0),
          frequency = factor(frequency,
                            levels = levels,
-                           labels = labels))
+                           labels = labels)) %>%
+  mutate(percent_answers = if_else(frequency == labels[1] | frequency == labels[2],
+                                   -1*percent_answers,percent_answers))
 }
 
-head(summ_likert(surveydf,q1,q5,labels,levels))
+head(summ_likert(surveydf,q1,q5,likertlabs,likertlevels))
 ```
 
 
@@ -153,17 +158,16 @@ graph_likert <- function(df) {
             position = position_stack(vjust = 0.5),
             color = "white",
             fontface = "bold") +
+  geom_hline(yintercept = 0) +
   coord_flip() +
   scale_x_discrete() +
-  scale_fill_viridis_d() +
-  labs(title = "To what extent do you agree with the following statements?",
-       x = "Percent of respondents",
-       fill = NULL) +
+  scale_fill_brewer(palette = "RdYlGn") +
   theme_minimal() +
+  labs(fill = NULL) +
   theme(axis.text.x = element_blank(),
         axis.title.x = element_blank(),
         panel.grid = element_blank(),
-        legend.position = "bottom")
+        legend.position = "top")
 }
 
 ```
@@ -173,8 +177,11 @@ graph_likert <- function(df) {
 
 Lastly, we apply the function
 ```{r }
-summ_likert(surveydf,q1,q5,labels,levels) %>%
-  graph_likert()
+summ_likert(surveydf,q1,q5,likertlabs,likertlevels) %>%
+  graph_likert() +
+  labs(x =" ",
+      title = "To what extent do you agree with the following?",
+       subtitle = "I consider myself good at")
 
 
 ```
@@ -182,9 +189,6 @@ summ_likert(surveydf,q1,q5,labels,levels) %>%
 
  **Note to reviewer, the code below are notes to help develop the code, no need
 to review/evaluate**
-
-
-
 
 
 ```{r, include = FALSE,evaluate = FALSE }
@@ -213,7 +217,7 @@ surveydf %>%
             fontface = "bold") +
   coord_flip() +
   scale_x_discrete() +
-  scale_fill_viridis_d() +
+  scale_fill_brewer(palette = "RdYlGn") +
   labs(title = "To what extent do you agree with the following statements?",
        y = "Percent of respondents",
        fill = NULL) +
