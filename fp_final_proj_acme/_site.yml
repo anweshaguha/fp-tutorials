@@ -1,0 +1,12 @@
+name: "fp_final_proj_acme"
+title: "fp_final_proj_acme"
+description: |
+  fp_final_proj_acme
+output_dir: "docs"
+navbar:
+  right:
+    - text: "Home"
+      href: index.html
+    - text: "About"
+      href: about.html
+output: distill::distill_article

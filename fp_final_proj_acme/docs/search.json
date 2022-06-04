@@ -1,0 +1,20 @@
+{
+  "articles": [
+    {
+      "path": "about.html",
+      "title": "About this blog",
+      "description": "Some additional details about the blog",
+      "author": [],
+      "contents": "\r\n\r\n\r\n\r\n",
+      "last_modified": "2022-06-04T16:02:25-07:00"
+    },
+    {
+      "path": "index.html",
+      "title": "fp_final_proj_acme",
+      "author": [],
+      "contents": "\r\n\r\n\r\n\r\n",
+      "last_modified": "2022-06-04T16:18:20-07:00"
+    }
+  ],
+  "collections": ["posts/posts.json"]
+}

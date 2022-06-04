@@ -1,0 +1,170 @@
+---
+title: "Twitter Data Analysis with Functional Programming"
+description: |
+   Post description here!
+author:
+  - name: Anwesha Guha
+    url: https://example.com/norajones
+date: 2022-06-04
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+
+
+RQ: Does sentiment 
+
+### STEP 1: Get Data from Twitter API**
+
+[insert description about process]
+[include some relevant links]
+
+* [How to Get Twitter Data Using API, R bloggers](https://www.r-bloggers.com/2022/03/how-to-get-twitter-data-using-r/)
+* [A Guide to Analysing Tweets with R](https://towardsdatascience.com/a-guide-to-mining-and-analysing-tweets-with-r-2f56818fdd16)
+
+[none of the code here is run due API restrictions]
+t
+**1.1: Set up Dev account in Twitter**
+```{r eval=FALSE, echo=TRUE}
+api_key <- "XXXXXX"
+
+api_key_secret <- "XXXXX"
+
+access_token <- "XXXXXX"
+
+access_token_secret <- "XXXXX"
+
+bearer_token <- "XXXXXXXX"
+```
+
+```{r eval=FALSE, echo=TRUE}
+library(rtweet)
+token <- create_token(
+  app = "r-program-project",
+  consumer_key = api_key,
+  consumer_secret = api_key_secret,
+  access_token = access_token,
+  access_secret = access_token_secret)
+```
+
+**1.2: Save the data you are interested in**
+
+I am looking at the hashtag "CRT" or culturally relevant pedagogy. Note: the Twitter API only returns tweets from the last 6-9 days. As a result, the 18000-tweet request was not met; only 1567 tweets exist for that time window.
+
+If you would like more comprehensive coverage, you can apply on the developer website -- though more project details will be required. I will keep the limited number for the sake of this tutorial.
+
+```{r eval=FALSE, echo=TRUE}
+crt_tweets <- search_tweets("#CRT", 
+                    n = 18000, 
+                    include_rts = FALSE)
+```
+
+```{r eval=FALSE, echo=TRUE}
+write_csv(crt_tweets, "~/Documents/r_projects/edld653-22/fp_collab/fp-tutorials/data/crt_tweets.csv")
+```
+
+### STEP 2: Data cleaning and manipulation
+
+I'll go ahead and load relevant libraries and the csv file created from Step 1 here. 
+
+```{r}
+library(pacman)
+library(readr)
+library(here)#looks like the read_csv was hardcoded
+library(textdata)#needed this too
+p_load(httr, jsonlite, tidyverse, rtweet)
+```
+
+```{r}
+crt_tweet <- read_csv(here("data/crt_tweets.csv")) #changd this
+```
+
+**Explore source variable**
+
+```{r}
+table(crt_tweet$source)
+```
+
+```{r}
+crt_tweet <- crt_tweet %>% 
+  mutate(source2 = case_when(
+    source %in% c("Twitter for Android", "UberSocial for Android") ~ "Android Device",
+    source %in% c("Tweetbot for iΟS", "Twitter for iPad", "Twitter for iPhone", "Twitter for Mac") ~ "Apple Device",
+    source %in% c("Twitter Web App") ~ "Web App",
+    source %in% c("counterganda") ~ "Counterganda", #kept this separate since this was so large
+    TRUE ~ "Other"
+  ))
+```
+
+Better variable to work with:
+```{r}
+table(crt_tweet$source2)
+```
+
+Say we wanted to create models for each of these groups. One way could be to create a dataframe for each group and fit a linear model. 
+
+```{r}
+twt_split <- crt_tweet %>% 
+  split(crt_tweet$source2)
+```
+
+```{r}
+posslm1 = possibly(.f = lm, otherwise = "Error")
+
+map(twt_split, ~posslm1(favorite_count ~ source2, data = .x) )
+```
+
+```{r}
+safelm = safely(.f = lm)
+map(twt_split, ~safelm(favorite_count ~ source2, data = .x) )
+```
+^^ I know these above are more artificial uses, but I am still getting errors in running this code. I can't seem to extract x = source2 and y = favorite_count
+
+* idea from [here](https://www.r-bloggers.com/2020/08/handling-errors-using-purrrs-possibly-and-safely/)
+
+
+**Set up sentiment analysis**
+
+```{r}
+library(tidytext)
+sentiment <- crt_tweet[,3:5] %>% unnest_tokens(output = 'word', input = 'text')
+```
+
+```{r}
+sentiment_dataset <- get_sentiments("afinn")
+sentiment_dataset <- arrange(sentiment_dataset, -value)
+
+#merge
+sentiment <- merge(sentiment, sentiment_dataset, by = 'word')
+
+#clean
+sentiment$word <- NULL
+sentiment$screen_name <- NULL
+
+#get nearest hour of time for plot
+sentiment$hour <- format(round(sentiment$created_at, units="hours"), format="%H:%M")
+```
+
+```{r}
+search_term <- "#CRT"
+pivot <- sentiment %>%
+  group_by(hour) %>%
+  summarise(sentiment = mean(value))
+
+#plot
+ggplot(pivot[-1,], aes(x = hour, y = sentiment)) + 
+  geom_line(group = 1) + 
+  geom_point() + 
+  theme_minimal() + 
+  labs(title = paste0('Average sentiment of tweetings mentioning "',search_term,'"'),
+       subtitle = paste0(pivot$hour[2],' - ',pivot$hour[nrow(pivot)],' on ', format(sentiment$created_at[1], '%d %B %Y')),
+       x = 'Date', 
+       y = 'Sentiment', 
+       caption = 'Source: Twitter API')+
+  theme(axis.text.x = element_text(angle=45))
+```
+
+[Next step: do sentiment graphs by group]
+
+Sentiment analysis tutorial for reference: [here](https://rforjournalists.com/2019/12/23/how-to-perform-sentiment-analysis-on-tweets/)
