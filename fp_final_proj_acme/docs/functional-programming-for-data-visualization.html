@@ -50,17 +50,16 @@ pre.numberSource code > span > a:first-child::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  { color: #00769e; background-color: #f1f3f5; }
+  {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span { color: #00769e; } /* Normal */
 code span.al { color: #ad0000; } /* Alert */
 code span.an { color: #5e5e5e; } /* Annotation */
-code span.at { color: #657422; } /* Attribute */
+code span.at { } /* Attribute */
 code span.bn { color: #ad0000; } /* BaseN */
 code span.bu { } /* BuiltIn */
-code span.cf { color: #00769e; } /* ControlFlow */
+code span.cf { color: #007ba5; } /* ControlFlow */
 code span.ch { color: #20794d; } /* Char */
 code span.cn { color: #8f5902; } /* Constant */
 code span.co { color: #5e5e5e; } /* Comment */
@@ -74,9 +73,9 @@ code span.fl { color: #ad0000; } /* Float */
 code span.fu { color: #4758ab; } /* Function */
 code span.im { } /* Import */
 code span.in { color: #5e5e5e; } /* Information */
-code span.kw { color: #00769e; } /* Keyword */
+code span.kw { color: #007ba5; } /* Keyword */
 code span.op { color: #5e5e5e; } /* Operator */
-code span.ot { color: #00769e; } /* Other */
+code span.ot { color: #007ba5; } /* Other */
 code span.pp { color: #ad0000; } /* Preprocessor */
 code span.sc { color: #5e5e5e; } /* SpecialChar */
 code span.ss { color: #20794d; } /* SpecialString */
@@ -88,37 +87,37 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 
   <!--radix_placeholder_meta_tags-->
-  <title>Welcome to functional programming with R.</title>
+  <title>Functional Programming for Data Visualization</title>
 
-  <meta property="description" itemprop="description" content="Welcome to our new blog! Here, we explore different ways to work with functional programming techniques using R. We hope you enjoy reading what we have to say!"/>
+  <meta property="description" itemprop="description" content="Developing a function to visualize survey data"/>
 
 
   <!--  https://schema.org/Article -->
   <meta property="article:published" itemprop="datePublished" content="2022-06-04"/>
   <meta property="article:created" itemprop="dateCreated" content="2022-06-04"/>
-  <meta name="article:author" content="Anwesha Guha, Errol Kaylor, Cassie Malcolm, Manuel Vazquez"/>
+  <meta name="article:author" content="Manuel Vazquez"/>
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-  <meta property="og:title" content="Welcome to functional programming with R."/>
+  <meta property="og:title" content="Functional Programming for Data Visualization"/>
   <meta property="og:type" content="article"/>
-  <meta property="og:description" content="Welcome to our new blog! Here, we explore different ways to work with functional programming techniques using R. We hope you enjoy reading what we have to say!"/>
+  <meta property="og:description" content="Developing a function to visualize survey data"/>
   <meta property="og:locale" content="en_US"/>
 
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
-  <meta property="twitter:title" content="Welcome to functional programming with R."/>
-  <meta property="twitter:description" content="Welcome to our new blog! Here, we explore different ways to work with functional programming techniques using R. We hope you enjoy reading what we have to say!"/>
+  <meta property="twitter:title" content="Functional Programming for Data Visualization"/>
+  <meta property="twitter:description" content="Developing a function to visualize survey data"/>
 
   <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output"]}},"value":[{"type":"character","attributes":{},"value":["Welcome to functional programming with R."]},{"type":"character","attributes":{},"value":["Welcome to our new blog! Here, we explore different ways to work with functional programming techniques using R. We hope you enjoy reading what we have to say!\n"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation"]}},"value":[{"type":"character","attributes":{},"value":["Anwesha Guha, Errol Kaylor, Cassie Malcolm, Manuel Vazquez"]},{"type":"character","attributes":{},"value":["https://example.com/norajones"]},{"type":"character","attributes":{},"value":["University of Oregon"]}]}]},{"type":"character","attributes":{},"value":["06-04-2022"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output"]}},"value":[{"type":"character","attributes":{},"value":["Functional Programming for Data Visualization"]},{"type":"character","attributes":{},"value":["Developing a function to visualize survey data\n"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["Manuel Vazquez"]},{"type":"character","attributes":{},"value":["https://example.com/norajones"]}]}]},{"type":"character","attributes":{},"value":["2022-06-04"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["welcome_files/anchor-4.2.2/anchor.min.js","welcome_files/bowser-1.9.3/bowser.min.js","welcome_files/distill-2.2.21/template.v2.js","welcome_files/header-attrs-2.11/header-attrs.js","welcome_files/header-attrs-2.14/header-attrs.js","welcome_files/jquery-3.6.0/jquery-3.6.0.js","welcome_files/jquery-3.6.0/jquery-3.6.0.min.js","welcome_files/jquery-3.6.0/jquery-3.6.0.min.map","welcome_files/popper-2.6.0/popper.min.js","welcome_files/tippy-6.2.7/tippy-bundle.umd.min.js","welcome_files/tippy-6.2.7/tippy-light-border.css","welcome_files/tippy-6.2.7/tippy.css","welcome_files/tippy-6.2.7/tippy.umd.min.js","welcome_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["functional-programming-for-data-visualization_files/figure-html5/unnamed-chunk-7-1.png","functional-programming-for-data-visualization_files/figure-html5/unnamed-chunk-8-1.png"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -430,6 +429,10 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
     position: relative;
     margin-bottom: 2.5em;
     margin-top: 1.5em;
+  }
+
+  .figure img {
+    width: 100%;
   }
 
   .figure .caption {
@@ -1261,12 +1264,6 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
       // hoverable references
       $('span.citation[data-cites]').each(function() {
-        if ($(this).children()[0].nodeName == "D-FOOTNOTE") {
-          var fn = $(this).children()[0]
-          $(this).html(fn.shadowRoot.querySelector("sup"))
-          $(this).id = fn.id
-          fn.remove()
-        }
         var refs = $(this).attr('data-cites').split(" ");
         var refHtml = refs.map(function(ref) {
           return "<p>" + $('#ref-' + ref).html() + "</p>";
@@ -1281,31 +1278,6 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
           placement: 'bottom-start'
         });
       });
-
-      // fix footnotes in tables (#411)
-      // replacing broken distill.pub feature
-      $('table d-footnote').each(function() {
-        // we replace internal showAtNode methode which is triggered when hovering a footnote
-        this.hoverBox.showAtNode = function(node) {
-          // ported from https://github.com/distillpub/template/pull/105/files
-          calcOffset = function(elem) {
-              let x = elem.offsetLeft;
-              let y = elem.offsetTop;
-              // Traverse upwards until an `absolute` element is found or `elem`
-              // becomes null.
-              while (elem = elem.offsetParent && elem.style.position != 'absolute') {
-                  x += elem.offsetLeft;
-                  y += elem.offsetTop;
-              }
-
-              return { left: x, top: y };
-          }
-          // https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/offsetTop
-          const bbox = node.getBoundingClientRect();
-          const offset = calcOffset(node);
-          this.show([offset.left + bbox.width, offset.top + bbox.height]);
-        }
-      })
 
       // clear polling timer
       clearInterval(tid);
@@ -1405,8 +1377,6 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
     // mark non-body figures created by knitr chunks as 100% width
     $('.layout-chunk').each(function(i, val) {
       var figures = $(this).find('img, .html-widget');
-      // ignore leaflet img layers (#106)
-      figures = figures.filter(':not(img[class*="leaflet"])')
       if ($(this).attr('data-layout') !== "l-body") {
         figures.css('width', '100%');
       } else {
@@ -1429,7 +1399,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
     // get rid of index.html references in header
     if (window.location.protocol !== "file:") {
       $('.distill-site-header a[href]').each(function(i,val) {
-        $(this).attr('href', $(this).attr('href').replace(/^index[.]html/, "./"));
+        $(this).attr('href', $(this).attr('href').replace("index.html", "./"));
       });
     }
 
@@ -1468,16 +1438,16 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </script>
 
   <!--/radix_placeholder_distill-->
-  <script src="welcome_files/header-attrs-2.11/header-attrs.js"></script>
-  <script src="welcome_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-  <script src="welcome_files/popper-2.6.0/popper.min.js"></script>
-  <link href="welcome_files/tippy-6.2.7/tippy.css" rel="stylesheet" />
-  <link href="welcome_files/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
-  <script src="welcome_files/tippy-6.2.7/tippy.umd.min.js"></script>
-  <script src="welcome_files/anchor-4.2.2/anchor.min.js"></script>
-  <script src="welcome_files/bowser-1.9.3/bowser.min.js"></script>
-  <script src="welcome_files/webcomponents-2.0.0/webcomponents.js"></script>
-  <script src="welcome_files/distill-2.2.21/template.v2.js"></script>
+  <script src="functional-programming-for-data-visualization_files/header-attrs-2.14/header-attrs.js"></script>
+  <script src="functional-programming-for-data-visualization_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+  <script src="functional-programming-for-data-visualization_files/popper-2.6.0/popper.min.js"></script>
+  <link href="functional-programming-for-data-visualization_files/tippy-6.2.7/tippy.css" rel="stylesheet" />
+  <link href="functional-programming-for-data-visualization_files/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
+  <script src="functional-programming-for-data-visualization_files/tippy-6.2.7/tippy.umd.min.js"></script>
+  <script src="functional-programming-for-data-visualization_files/anchor-4.2.2/anchor.min.js"></script>
+  <script src="functional-programming-for-data-visualization_files/bowser-1.9.3/bowser.min.js"></script>
+  <script src="functional-programming-for-data-visualization_files/webcomponents-2.0.0/webcomponents.js"></script>
+  <script src="functional-programming-for-data-visualization_files/distill-2.2.21/template.v2.js"></script>
   <!--radix_placeholder_site_in_header-->
   <!--/radix_placeholder_site_in_header-->
 
@@ -1489,7 +1459,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Welcome to functional programming with R.","description":"Welcome to our new blog! Here, we explore different ways to work with functional programming techniques using R. We hope you enjoy reading what we have to say!","authors":[{"author":"Anwesha Guha, Errol Kaylor, Cassie Malcolm, Manuel Vazquez","authorURL":"https://example.com/norajones","affiliation":"University of Oregon","affiliationURL":"#","orcidID":""}],"publishedDate":"2022-06-04T00:00:00.000-07:00","citationText":"Vazquez, 2022"}
+{"title":"Functional Programming for Data Visualization","description":"Developing a function to visualize survey data","authors":[{"author":"Manuel Vazquez","authorURL":"https://example.com/norajones","affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2022-06-04T00:00:00.000-07:00","citationText":"Vazquez, 2022"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -1499,20 +1469,240 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--/radix_placeholder_site_before_body-->
 
 <div class="d-title">
-<h1>Welcome to functional programming with R.</h1>
+<h1>Functional Programming for Data Visualization</h1>
 <!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
-<p><p>Welcome to our new blog! Here, we explore different ways to work with functional programming techniques using R. We hope you enjoy reading what we have to say!</p></p>
+<p><p>Developing a function to visualize survey data</p></p>
 </div>
 
 <div class="d-byline">
-  Anwesha Guha, Errol Kaylor, Cassie Malcolm, Manuel Vazquez <a href="https://example.com/norajones" class="uri">https://example.com/norajones</a> (University of Oregon)
+  Manuel Vazquez <a href="https://example.com/norajones"
+class="uri">https://example.com/norajones</a> 
   
-<br/>06-04-2022
+<br/>2022-06-04
 </div>
 
 <div class="d-article">
-<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<h2 id="introduction">Introduction</h2>
+<p>This tutorial will walk through an applied example to show how to
+simulate survey data and create a function to graph survey data using
+divergent, stacked bar charts. Creating this function would allow the
+user to graph survey data to any of their liking!</p>
+<h2 id="simulating-data">Simulating data</h2>
+<p>We begin by simulating some survey data. We will simulate responses
+to 5 questions that use a likert item with a scale of one to four. To
+ease the simulation of the data, we will create a function to generate
+this data. The function has 5 formals or arguments:</p>
+<ol type="1">
+<li><strong>max</strong> - An integer that represents the maximum of the
+likert scale. Since the items we are developing are on a 4 point scale,
+then we will add 4. If we wanted to simulate items on a 7 point scale,
+then we would add a 7 to this argument.</li>
+<li><strong>n</strong> - An integer that represents the total number
+observations that the user wishes to generate</li>
+<li><strong>weights</strong> - A list of weights that the user specifies
+to influence the frequency of certain responses. The length of the
+vector should be equal to the max.</li>
+<li><strong>levels</strong> - A numeric vector that lists the numeric
+number tied to each response. It should start with 1 and end with the
+max number specified.</li>
+<li><strong>labels</strong> - A character vector with the labels
+attached to the numeric values.</li>
+</ol>
+The function below also provides an error message in case certain
+formals are not specified correctly.
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>likert_sim</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>max</span>, <span class='va'>n</span>, <span class='va'>weights</span>, <span class='va'>levels</span>,<span class='va'>labels</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='kw'>if</span> <span class='op'>(</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>levels</span><span class='op'>)</span> <span class='op'>==</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>labels</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>&amp;</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>weights</span><span class='op'>)</span> <span class='op'>==</span> <span class='va'>max</span><span class='op'>)</span><span class='op'>)</span>  <span class='op'>{</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='va'>max</span>, <span class='va'>n</span>, replace <span class='op'>=</span> <span class='cn'>TRUE</span>, prob <span class='op'>=</span> <span class='va'>weights</span><span class='op'>)</span>,
+         levels <span class='op'>=</span> <span class='va'>levels</span>,
+         labels <span class='op'>=</span> <span class='va'>labels</span><span class='op'>)</span>
+  <span class='op'>}</span> <span class='kw'>else</span> <span class='op'>{</span>
+  <span class='kw'><a href='https://rdrr.io/r/base/stop.html'>stop</a></span><span class='op'>(</span><span class='st'>"Are the length of your labels, levels, or weights equal to the likert item specified? "</span>,  
+          <span class='st'>" The scale is on a "</span>, <span class='va'>max</span>, <span class='st'>" point likert item scale. Did you add sufficient arguments?  "</span>,
+         <span class='st'>", Number of weight arguments added was "</span>,<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>weights</span><span class='op'>)</span>,
+         <span class='st'>", Number of labels arguments added was "</span>, <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>labels</span><span class='op'>)</span>,
+         <span class='st'>", Number of level arguments added was, "</span>, <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>levels</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='op'>}</span>
+<span class='op'>}</span>
+</code></pre>
+</div>
+</div>
+<p>Using this function, we simulate the data for five questions which we
+call q1… to q5. The sample scale we will simulate will be a 4 point
+agreement scale ranging from strongly disagree to strongly agree. Before
+running the function, we define the levels and the labels. Again, the
+lengths of each of these vectors should be similar.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>levels</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>4</span><span class='op'>)</span>
+<span class='va'>labels</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Strongly disagree"</span>, <span class='st'>"Disagree"</span>, <span class='st'>"Agree"</span>, <span class='st'>"Strongly agree"</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>Below, we use the simulate function we just created to generate 5
+simulated responses with varying weights in responses. To do this, we
+use the levels and labels vectors defined above and plug those in to the
+function we defined. We define a matrix with variying weights that we
+will use in the function. We will use the map command to loop through
+the function five times, and generate a list with five items.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>allWeights</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>.20</span>,<span class='fl'>.30</span>,<span class='fl'>.25</span>,<span class='fl'>.25</span>,
+                     <span class='fl'>.10</span>,<span class='fl'>.50</span>,<span class='fl'>.15</span>,<span class='fl'>.25</span>,
+                     <span class='fl'>.25</span>,<span class='fl'>.10</span>,<span class='fl'>.50</span>,<span class='fl'>.15</span>,
+                     <span class='fl'>.30</span>,<span class='fl'>.30</span>,<span class='fl'>.10</span>,<span class='fl'>.30</span>,
+                     <span class='fl'>.39</span>,<span class='fl'>.45</span>,<span class='fl'>.15</span>,<span class='fl'>.10</span><span class='op'>)</span>,
+                   nrow<span class='op'>=</span><span class='fl'>5</span>,ncol<span class='op'>=</span><span class='fl'>4</span>,byrow<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+
+ <span class='va'>allQ</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>map</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>, <span class='op'>~</span><span class='fu'>likert_sim</span><span class='op'>(</span><span class='fl'>4</span>, <span class='fl'>250</span>, <span class='va'>allWeights</span><span class='op'>[</span><span class='va'>.x</span>,<span class='op'>]</span>, <span class='va'>levels</span>, <span class='va'>labels</span><span class='op'>)</span><span class='op'>)</span> 
+</code></pre>
+</div>
+</div>
+<p>After we simulate this data, we bind it together into a data frame
+and generate a random respone ID. The data is now ready to be
+graphed!</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>surveydf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://purrr.tidyverse.org/reference/reduce.html'>reduce</a></span><span class='op'>(</span><span class='va'>allQ</span>, <span class='va'>cbind</span><span class='op'>)</span> 
+<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>surveydf</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"q1"</span>,<span class='st'>"q2"</span>,<span class='st'>"q3"</span>,<span class='st'>"q4"</span>,<span class='st'>"q5"</span><span class='op'>)</span>
+
+<span class='va'>surveydf</span> <span class='op'>&lt;-</span> <span class='va'>surveydf</span> <span class='op'><a href='https://purrr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+  <span class='fu'><a href='https://tibble.tidyverse.org/reference/as_tibble.html'>as_tibble</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='https://purrr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>id <span class='op'>=</span> <span class='fu'>ids</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ids/man/random_id.html'>random_id</a></span><span class='op'>(</span><span class='fl'>250</span>, <span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<h2 id="create-a-function-to-graph-the-data">Create a function to graph
+the data</h2>
+<p>Now that we have the data simulated, we are ready to graph. In order
+to create a divergent horizontal bar chart, we need to take on two
+steps. First, we need to transform the data so that it summarizes mean
+responses and it is in a format that allows for graphing in bar format.
+This means that we need to summarize and pivot the data in a long
+format. After we summarize and prep the data, we move on to second step
+which is to actually graph the data using <em>ggplot</em>. We will
+create a function that corresponds to each of these two steps, and then
+apply those two functions together to graph the information.</p>
+<p>To begin, we will create a function that collapses and pivots the
+data. The function has 4 arguments:</p>
+<ol type="1">
+<li><strong>df </strong> - specifies the data frame to be used,</li>
+<li><strong>cols</strong> - is a list of the name of the columns we wish
+to include,</li>
+<li><strong>labels</strong> - Labels of the responses</li>
+<li><strong>levels</strong> - Numeric values of the responses</li>
+</ol>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>summ_likert</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>df</span>,<span class='va'>mincol</span>,<span class='va'>maxcol</span>,<span class='va'>labels</span>,<span class='va'>levels</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='va'>df</span> <span class='op'><a href='https://purrr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+  <span class='fu'><a href='https://tidyr.tidyverse.org/reference/pivot_longer.html'>pivot_longer</a></span><span class='op'>(</span>
+    cols <span class='op'>=</span> <span class='op'>{</span><span class='op'>{</span><span class='va'>mincol</span><span class='op'>}</span><span class='op'>}</span><span class='op'>:</span><span class='op'>{</span><span class='op'>{</span><span class='va'>maxcol</span><span class='op'>}</span><span class='op'>}</span>,
+    names_to <span class='op'>=</span> <span class='st'>"question"</span>,
+    values_to <span class='op'>=</span> <span class='st'>"frequency"</span><span class='op'>)</span> <span class='op'><a href='https://purrr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>question</span>,<span class='va'>frequency</span><span class='op'>)</span> <span class='op'><a href='https://purrr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/count.html'>count</a></span><span class='op'>(</span>name <span class='op'>=</span> <span class='st'>"n_answers"</span><span class='op'>)</span> <span class='op'><a href='https://purrr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>question</span><span class='op'>)</span> <span class='op'><a href='https://purrr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>percent_answers <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='op'>(</span><span class='va'>n_answers</span> <span class='op'>/</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>n_answers</span><span class='op'>)</span><span class='op'>)</span><span class='op'>*</span><span class='fl'>100</span>, <span class='fl'>0</span><span class='op'>)</span>,
+         frequency <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>frequency</span>,
+                           levels <span class='op'>=</span> <span class='va'>levels</span>,
+                           labels <span class='op'>=</span> <span class='va'>labels</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='https://purrr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>percent_answers <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/if_else.html'>if_else</a></span><span class='op'>(</span><span class='va'>frequency</span> <span class='op'>==</span> <span class='va'>labels</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span> <span class='op'>|</span> <span class='va'>frequency</span> <span class='op'>==</span> <span class='va'>labels</span><span class='op'>[</span><span class='fl'>2</span><span class='op'>]</span>,
+                                   <span class='op'>-</span><span class='fl'>1</span><span class='op'>*</span><span class='va'>percent_answers</span>,<span class='va'>percent_answers</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>}</span>
+</code></pre>
+</div>
+</div>
+<p>Here, we use the <em>head</em> command to check how well the function
+works. Note that for the last two arguments — labels and levels — I am
+using the vectors that were defined earlier in the data simulation step.
+You will notice that the percent_answers column has some negative
+answers. This was done on purpose so that responses that are more
+negative fall to the left of zero. This is needed in order to graph the
+likert items in a divergent bar chart.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'>summ_likert</span><span class='op'>(</span><span class='va'>surveydf</span>,<span class='va'>q1</span>,<span class='va'>q5</span>,<span class='va'>labels</span>,<span class='va'>levels</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code># A tibble: 6 x 4
+# Groups:   question [2]
+  question frequency         n_answers percent_answers
+  &lt;chr&gt;    &lt;fct&gt;                 &lt;int&gt;           &lt;dbl&gt;
+1 q1       Strongly disagree        48             -19
+2 q1       Disagree                 79             -32
+3 q1       Agree                    60              24
+4 q1       Strongly agree           63              25
+5 q2       Strongly disagree        24             -10
+6 q2       Disagree                135             -54</code></pre>
+</div>
+<p>Next, we define a function to graph the data. The function will only
+have one argument, <strong>df</strong>. This argument refers to the data
+frame</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>graph_likert</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='va'>df</span> <span class='op'><a href='https://purrr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>question</span>,
+             y <span class='op'>=</span> <span class='va'>percent_answers</span>,
+             fill <span class='op'>=</span> <span class='va'>frequency</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> 
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_bar.html'>geom_bar</a></span><span class='op'>(</span>stat <span class='op'>=</span> <span class='st'>"identity"</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_text.html'>geom_text</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>label <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span><span class='op'>(</span><span class='va'>percent_answers</span><span class='op'>)</span><span class='op'>)</span>,
+            position <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/position_stack.html'>position_stack</a></span><span class='op'>(</span>vjust <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span>,
+            color <span class='op'>=</span> <span class='st'>"white"</span>,
+            fontface <span class='op'>=</span> <span class='st'>"bold"</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_abline.html'>geom_hline</a></span><span class='op'>(</span>yintercept <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/coord_flip.html'>coord_flip</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_brewer.html'>scale_fill_brewer</a></span><span class='op'>(</span>palette <span class='op'>=</span> <span class='st'>"RdYlGn"</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_minimal</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>fill <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme</a></span><span class='op'>(</span>axis.text.x <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/element.html'>element_blank</a></span><span class='op'>(</span><span class='op'>)</span>,
+        axis.title.x <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/element.html'>element_blank</a></span><span class='op'>(</span><span class='op'>)</span>,
+        panel.grid <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/element.html'>element_blank</a></span><span class='op'>(</span><span class='op'>)</span>,
+        legend.position <span class='op'>=</span> <span class='st'>"top"</span><span class='op'>)</span>
+<span class='op'>}</span>
+</code></pre>
+</div>
+</div>
+<h2 id="apply-the-function">Apply the function</h2>
+<p>Finally, we can apply the function to graph the simulated data. We
+can do this by using the function that pivots the data
+(<em>summ_likert</em>) and pass through the function that graphs the
+data (<em>graph_likert</em>), and that is it! If you have multiple
+questions, you can reuse this function and reduce the code you
+write!</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>summ_likert</span><span class='op'>(</span><span class='va'>surveydf</span>,<span class='va'>q1</span>,<span class='va'>q5</span>,<span class='va'>labels</span>,<span class='va'>levels</span><span class='op'>)</span> <span class='op'><a href='https://purrr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+  <span class='fu'>graph_likert</span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="functional-programming-for-data-visualization_files/figure-html5/unnamed-chunk-7-1.png" width="624" /></p>
+</div>
+<p>You can also add some further customization to make the graph easier
+to read. For example, I can add a title and subtitle to the graph as
+well as meaningful x labels to the graph.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>summ_likert</span><span class='op'>(</span><span class='va'>surveydf</span>,<span class='va'>q1</span>,<span class='va'>q5</span>,<span class='va'>labels</span>,<span class='va'>levels</span><span class='op'>)</span> <span class='op'><a href='https://purrr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+  <span class='fu'>graph_likert</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>x <span class='op'>=</span><span class='st'>" "</span>,
+      title <span class='op'>=</span> <span class='st'>"To what extent do you agree with the following?"</span>,
+       subtitle <span class='op'>=</span> <span class='st'>"I consider myself good at"</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_discrete.html'>scale_x_discrete</a></span><span class='op'>(</span>labels<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Teaching content to \n\ EL students"</span>, 
+                            <span class='st'>"Assessing EL students"</span>, 
+                            <span class='st'>"Leveraging EL student \n\ background in instruction"</span>, 
+                            <span class='st'>"Supporting English \n\ proficiency development"</span>, 
+                            <span class='st'>"Honoring EL students' \n\ background and culture"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme</a></span><span class='op'>(</span>plot.title.position <span class='op'>=</span> <span class='st'>"plot"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="functional-programming-for-data-visualization_files/figure-html5/unnamed-chunk-8-1.png" width="624" /></p>
+</div>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>

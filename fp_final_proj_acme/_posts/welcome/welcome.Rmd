@@ -1,13 +1,11 @@
 ---
-title: "Welcome to fp_final_proj_acme"
+title: "Welcome to functional programming with R."
 description: |
-  Welcome to our new blog, fp_final_proj_acme. We hope you enjoy 
-  reading what we have to say!
+  Welcome to our new blog! Here, we explore different ways to work with functional programming techniques using R. We hope you enjoy reading what we have to say!
 author:
-  - name: Nora Jones 
+  - name: Anwesha Guha, Errol Kaylor, Cassie Malcolm, Manuel Vazquez 
     url: https://example.com/norajones
-    affiliation: Spacely Sprockets
-    affiliation_url: https://example.com/spacelysprokets
+    affiliation: University of Oregon
 date: 06-04-2022
 output:
   distill::distill_article:

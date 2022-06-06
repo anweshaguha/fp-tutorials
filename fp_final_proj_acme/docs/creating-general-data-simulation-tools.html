@@ -50,17 +50,16 @@ pre.numberSource code > span > a:first-child::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  { color: #00769e; background-color: #f1f3f5; }
+  {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span { color: #00769e; } /* Normal */
 code span.al { color: #ad0000; } /* Alert */
 code span.an { color: #5e5e5e; } /* Annotation */
-code span.at { color: #657422; } /* Attribute */
+code span.at { } /* Attribute */
 code span.bn { color: #ad0000; } /* BaseN */
 code span.bu { } /* BuiltIn */
-code span.cf { color: #00769e; } /* ControlFlow */
+code span.cf { color: #007ba5; } /* ControlFlow */
 code span.ch { color: #20794d; } /* Char */
 code span.cn { color: #8f5902; } /* Constant */
 code span.co { color: #5e5e5e; } /* Comment */
@@ -74,9 +73,9 @@ code span.fl { color: #ad0000; } /* Float */
 code span.fu { color: #4758ab; } /* Function */
 code span.im { } /* Import */
 code span.in { color: #5e5e5e; } /* Information */
-code span.kw { color: #00769e; } /* Keyword */
+code span.kw { color: #007ba5; } /* Keyword */
 code span.op { color: #5e5e5e; } /* Operator */
-code span.ot { color: #00769e; } /* Other */
+code span.ot { color: #007ba5; } /* Other */
 code span.pp { color: #ad0000; } /* Preprocessor */
 code span.sc { color: #5e5e5e; } /* SpecialChar */
 code span.ss { color: #20794d; } /* SpecialString */
@@ -88,37 +87,37 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 
   <!--radix_placeholder_meta_tags-->
-  <title>Welcome to functional programming with R.</title>
+  <title>Creating General Data Simulation Tools</title>
 
-  <meta property="description" itemprop="description" content="Welcome to our new blog! Here, we explore different ways to work with functional programming techniques using R. We hope you enjoy reading what we have to say!"/>
+  <meta property="description" itemprop="description" content="Create your own functions to easily simulate datasets!"/>
 
 
   <!--  https://schema.org/Article -->
   <meta property="article:published" itemprop="datePublished" content="2022-06-04"/>
   <meta property="article:created" itemprop="dateCreated" content="2022-06-04"/>
-  <meta name="article:author" content="Anwesha Guha, Errol Kaylor, Cassie Malcolm, Manuel Vazquez"/>
+  <meta name="article:author" content="Errol Kaylor"/>
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-  <meta property="og:title" content="Welcome to functional programming with R."/>
+  <meta property="og:title" content="Creating General Data Simulation Tools"/>
   <meta property="og:type" content="article"/>
-  <meta property="og:description" content="Welcome to our new blog! Here, we explore different ways to work with functional programming techniques using R. We hope you enjoy reading what we have to say!"/>
+  <meta property="og:description" content="Create your own functions to easily simulate datasets!"/>
   <meta property="og:locale" content="en_US"/>
 
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
-  <meta property="twitter:title" content="Welcome to functional programming with R."/>
-  <meta property="twitter:description" content="Welcome to our new blog! Here, we explore different ways to work with functional programming techniques using R. We hope you enjoy reading what we have to say!"/>
+  <meta property="twitter:title" content="Creating General Data Simulation Tools"/>
+  <meta property="twitter:description" content="Create your own functions to easily simulate datasets!"/>
 
   <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output"]}},"value":[{"type":"character","attributes":{},"value":["Welcome to functional programming with R."]},{"type":"character","attributes":{},"value":["Welcome to our new blog! Here, we explore different ways to work with functional programming techniques using R. We hope you enjoy reading what we have to say!\n"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation"]}},"value":[{"type":"character","attributes":{},"value":["Anwesha Guha, Errol Kaylor, Cassie Malcolm, Manuel Vazquez"]},{"type":"character","attributes":{},"value":["https://example.com/norajones"]},{"type":"character","attributes":{},"value":["University of Oregon"]}]}]},{"type":"character","attributes":{},"value":["06-04-2022"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output"]}},"value":[{"type":"character","attributes":{},"value":["Creating General Data Simulation Tools"]},{"type":"character","attributes":{},"value":["Create your own functions to easily simulate datasets!\n"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["Errol Kaylor"]},{"type":"character","attributes":{},"value":["https://example.com/norajones"]}]}]},{"type":"character","attributes":{},"value":["2022-06-04"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["welcome_files/anchor-4.2.2/anchor.min.js","welcome_files/bowser-1.9.3/bowser.min.js","welcome_files/distill-2.2.21/template.v2.js","welcome_files/header-attrs-2.11/header-attrs.js","welcome_files/header-attrs-2.14/header-attrs.js","welcome_files/jquery-3.6.0/jquery-3.6.0.js","welcome_files/jquery-3.6.0/jquery-3.6.0.min.js","welcome_files/jquery-3.6.0/jquery-3.6.0.min.map","welcome_files/popper-2.6.0/popper.min.js","welcome_files/tippy-6.2.7/tippy-bundle.umd.min.js","welcome_files/tippy-6.2.7/tippy-light-border.css","welcome_files/tippy-6.2.7/tippy.css","welcome_files/tippy-6.2.7/tippy.umd.min.js","welcome_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["creating-general-data-simulation-tools_files/figure-html5/unnamed-chunk-1-1.png","creating-general-data-simulation-tools_files/figure-html5/unnamed-chunk-1-2.png"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -430,6 +429,10 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
     position: relative;
     margin-bottom: 2.5em;
     margin-top: 1.5em;
+  }
+
+  .figure img {
+    width: 100%;
   }
 
   .figure .caption {
@@ -1261,12 +1264,6 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
       // hoverable references
       $('span.citation[data-cites]').each(function() {
-        if ($(this).children()[0].nodeName == "D-FOOTNOTE") {
-          var fn = $(this).children()[0]
-          $(this).html(fn.shadowRoot.querySelector("sup"))
-          $(this).id = fn.id
-          fn.remove()
-        }
         var refs = $(this).attr('data-cites').split(" ");
         var refHtml = refs.map(function(ref) {
           return "<p>" + $('#ref-' + ref).html() + "</p>";
@@ -1281,31 +1278,6 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
           placement: 'bottom-start'
         });
       });
-
-      // fix footnotes in tables (#411)
-      // replacing broken distill.pub feature
-      $('table d-footnote').each(function() {
-        // we replace internal showAtNode methode which is triggered when hovering a footnote
-        this.hoverBox.showAtNode = function(node) {
-          // ported from https://github.com/distillpub/template/pull/105/files
-          calcOffset = function(elem) {
-              let x = elem.offsetLeft;
-              let y = elem.offsetTop;
-              // Traverse upwards until an `absolute` element is found or `elem`
-              // becomes null.
-              while (elem = elem.offsetParent && elem.style.position != 'absolute') {
-                  x += elem.offsetLeft;
-                  y += elem.offsetTop;
-              }
-
-              return { left: x, top: y };
-          }
-          // https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/offsetTop
-          const bbox = node.getBoundingClientRect();
-          const offset = calcOffset(node);
-          this.show([offset.left + bbox.width, offset.top + bbox.height]);
-        }
-      })
 
       // clear polling timer
       clearInterval(tid);
@@ -1405,8 +1377,6 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
     // mark non-body figures created by knitr chunks as 100% width
     $('.layout-chunk').each(function(i, val) {
       var figures = $(this).find('img, .html-widget');
-      // ignore leaflet img layers (#106)
-      figures = figures.filter(':not(img[class*="leaflet"])')
       if ($(this).attr('data-layout') !== "l-body") {
         figures.css('width', '100%');
       } else {
@@ -1429,7 +1399,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
     // get rid of index.html references in header
     if (window.location.protocol !== "file:") {
       $('.distill-site-header a[href]').each(function(i,val) {
-        $(this).attr('href', $(this).attr('href').replace(/^index[.]html/, "./"));
+        $(this).attr('href', $(this).attr('href').replace("index.html", "./"));
       });
     }
 
@@ -1468,16 +1438,16 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </script>
 
   <!--/radix_placeholder_distill-->
-  <script src="welcome_files/header-attrs-2.11/header-attrs.js"></script>
-  <script src="welcome_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-  <script src="welcome_files/popper-2.6.0/popper.min.js"></script>
-  <link href="welcome_files/tippy-6.2.7/tippy.css" rel="stylesheet" />
-  <link href="welcome_files/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
-  <script src="welcome_files/tippy-6.2.7/tippy.umd.min.js"></script>
-  <script src="welcome_files/anchor-4.2.2/anchor.min.js"></script>
-  <script src="welcome_files/bowser-1.9.3/bowser.min.js"></script>
-  <script src="welcome_files/webcomponents-2.0.0/webcomponents.js"></script>
-  <script src="welcome_files/distill-2.2.21/template.v2.js"></script>
+  <script src="creating-general-data-simulation-tools_files/header-attrs-2.14/header-attrs.js"></script>
+  <script src="creating-general-data-simulation-tools_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+  <script src="creating-general-data-simulation-tools_files/popper-2.6.0/popper.min.js"></script>
+  <link href="creating-general-data-simulation-tools_files/tippy-6.2.7/tippy.css" rel="stylesheet" />
+  <link href="creating-general-data-simulation-tools_files/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
+  <script src="creating-general-data-simulation-tools_files/tippy-6.2.7/tippy.umd.min.js"></script>
+  <script src="creating-general-data-simulation-tools_files/anchor-4.2.2/anchor.min.js"></script>
+  <script src="creating-general-data-simulation-tools_files/bowser-1.9.3/bowser.min.js"></script>
+  <script src="creating-general-data-simulation-tools_files/webcomponents-2.0.0/webcomponents.js"></script>
+  <script src="creating-general-data-simulation-tools_files/distill-2.2.21/template.v2.js"></script>
   <!--radix_placeholder_site_in_header-->
   <!--/radix_placeholder_site_in_header-->
 
@@ -1489,7 +1459,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Welcome to functional programming with R.","description":"Welcome to our new blog! Here, we explore different ways to work with functional programming techniques using R. We hope you enjoy reading what we have to say!","authors":[{"author":"Anwesha Guha, Errol Kaylor, Cassie Malcolm, Manuel Vazquez","authorURL":"https://example.com/norajones","affiliation":"University of Oregon","affiliationURL":"#","orcidID":""}],"publishedDate":"2022-06-04T00:00:00.000-07:00","citationText":"Vazquez, 2022"}
+{"title":"Creating General Data Simulation Tools","description":"Create your own functions to easily simulate datasets!","authors":[{"author":"Errol Kaylor","authorURL":"https://example.com/norajones","affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2022-06-04T00:00:00.000-07:00","citationText":"Kaylor, 2022"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -1499,20 +1469,229 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--/radix_placeholder_site_before_body-->
 
 <div class="d-title">
-<h1>Welcome to functional programming with R.</h1>
+<h1>Creating General Data Simulation Tools</h1>
 <!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
-<p><p>Welcome to our new blog! Here, we explore different ways to work with functional programming techniques using R. We hope you enjoy reading what we have to say!</p></p>
+<p><p>Create your own functions to easily simulate datasets!</p></p>
 </div>
 
 <div class="d-byline">
-  Anwesha Guha, Errol Kaylor, Cassie Malcolm, Manuel Vazquez <a href="https://example.com/norajones" class="uri">https://example.com/norajones</a> (University of Oregon)
+  Errol Kaylor <a href="https://example.com/norajones"
+class="uri">https://example.com/norajones</a> 
   
-<br/>06-04-2022
+<br/>2022-06-04
 </div>
 
 <div class="d-article">
-<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<h2 id="outline">Outline</h2>
+<p>Overall goal: demonstrate ways to generate datasets for classroom
+use!</p>
+<p>Part 1: Mocking data based on existing data set (of
+numerical/character data) - Load in data, and produce descriptive stats.
+- Create a list of the columns/data types that are you are looking to
+mock up. - Populate the list with mocked data, depending on the types. -
+Loop through the process, depending on # of data sets needed. -
+Demonstrate function that walks them through the process – Simulating
+different types of data! - Mocking numerical data – Distribution
+functions, lists - Mocking character data – Use of stringi for character
+strings – Generate strings of specific length/format - Mocking logical
+data – Mock survey data</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://allisonhorst.github.io/palmerpenguins/'>palmerpenguins</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>stats</span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://personality-project.org/r/psych/'>psych</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span>
+<span class='va'>penguins</span>
+</code></pre>
+</div>
+<pre><code># A tibble: 344 x 8
+   species island    bill_length_mm bill_depth_mm flipper_length_mm
+   &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;
+ 1 Adelie  Torgersen           39.1          18.7               181
+ 2 Adelie  Torgersen           39.5          17.4               186
+ 3 Adelie  Torgersen           40.3          18                 195
+ 4 Adelie  Torgersen           NA            NA                  NA
+ 5 Adelie  Torgersen           36.7          19.3               193
+ 6 Adelie  Torgersen           39.3          20.6               190
+ 7 Adelie  Torgersen           38.9          17.8               181
+ 8 Adelie  Torgersen           39.2          19.6               195
+ 9 Adelie  Torgersen           34.1          18.1               193
+10 Adelie  Torgersen           42            20.2               190
+# ... with 334 more rows, and 3 more variables: body_mass_g &lt;int&gt;,
+#   sex &lt;fct&gt;, year &lt;int&gt;</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#first function, tell us descriptives, and show us some boxplots?</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>penguins</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>tibble [344 x 8] (S3: tbl_df/tbl/data.frame)
+ $ species          : Factor w/ 3 levels &quot;Adelie&quot;,&quot;Chinstrap&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+ $ island           : Factor w/ 3 levels &quot;Biscoe&quot;,&quot;Dream&quot;,..: 3 3 3 3 3 3 3 3 3 3 ...
+ $ bill_length_mm   : num [1:344] 39.1 39.5 40.3 NA 36.7 39.3 38.9 39.2 34.1 42 ...
+ $ bill_depth_mm    : num [1:344] 18.7 17.4 18 NA 19.3 20.6 17.8 19.6 18.1 20.2 ...
+ $ flipper_length_mm: int [1:344] 181 186 195 NA 193 190 181 195 193 190 ...
+ $ body_mass_g      : int [1:344] 3750 3800 3250 NA 3450 3650 3625 4675 3475 4250 ...
+ $ sex              : Factor w/ 2 levels &quot;female&quot;,&quot;male&quot;: 2 1 1 NA 1 2 1 2 NA NA ...
+ $ year             : int [1:344] 2007 2007 2007 2007 2007 2007 2007 2007 2007 2007 ...</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>species_tables</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/psych/man/describe.by.html'>describeBy</a></span><span class='op'>(</span><span class='va'>penguins</span>,group<span class='op'>=</span><span class='st'>"species"</span><span class='op'>)</span>
+
+<span class='va'>species_tables</span>
+</code></pre>
+</div>
+<pre><code>
+ Descriptive statistics by group 
+species: Adelie
+                  vars   n    mean     sd median trimmed    mad
+species*             1 152    1.00   0.00    1.0    1.00   0.00
+island*              2 152    2.05   0.80    2.0    2.07   1.48
+bill_length_mm       3 151   38.79   2.66   38.8   38.75   2.97
+bill_depth_mm        4 151   18.35   1.22   18.4   18.29   1.19
+flipper_length_mm    5 151  189.95   6.54  190.0  189.93   7.41
+body_mass_g          6 151 3700.66 458.57 3700.0 3685.74 444.78
+sex*                 7 146    1.50   0.50    1.5    1.50   0.74
+year                 8 152 2008.01   0.82 2008.0 2008.02   1.48
+                     min    max  range  skew kurtosis    se
+species*             1.0    1.0    0.0   NaN      NaN  0.00
+island*              1.0    3.0    2.0 -0.09    -1.43  0.06
+bill_length_mm      32.1   46.0   13.9  0.16    -0.23  0.22
+bill_depth_mm       15.5   21.5    6.0  0.31    -0.14  0.10
+flipper_length_mm  172.0  210.0   38.0  0.09     0.24  0.53
+body_mass_g       2850.0 4775.0 1925.0  0.28    -0.63 37.32
+sex*                 1.0    2.0    1.0  0.00    -2.01  0.04
+year              2007.0 2009.0    2.0 -0.02    -1.53  0.07
+---------------------------------------------------- 
+species: Chinstrap
+                  vars  n    mean     sd  median trimmed    mad
+species*             1 68    2.00   0.00    2.00    2.00   0.00
+island*              2 68    2.00   0.00    2.00    2.00   0.00
+bill_length_mm       3 68   48.83   3.34   49.55   48.91   3.63
+bill_depth_mm        4 68   18.42   1.14   18.45   18.42   1.41
+flipper_length_mm    5 68  195.82   7.13  196.00  195.75   7.41
+body_mass_g          6 68 3733.09 384.34 3700.00 3719.64 370.65
+sex*                 7 68    1.50   0.50    1.50    1.50   0.74
+year                 8 68 2007.97   0.86 2008.00 2007.96   1.48
+                     min    max  range  skew kurtosis    se
+species*             2.0    2.0    0.0   NaN      NaN  0.00
+island*              2.0    2.0    0.0   NaN      NaN  0.00
+bill_length_mm      40.9   58.0   17.1 -0.09    -0.14  0.40
+bill_depth_mm       16.4   20.8    4.4  0.01    -0.96  0.14
+flipper_length_mm  178.0  212.0   34.0 -0.01    -0.13  0.86
+body_mass_g       2700.0 4800.0 2100.0  0.24     0.36 46.61
+sex*                 1.0    2.0    1.0  0.00    -2.03  0.06
+year              2007.0 2009.0    2.0  0.06    -1.68  0.10
+---------------------------------------------------- 
+species: Gentoo
+                  vars   n    mean     sd median trimmed    mad
+species*             1 124    3.00   0.00    3.0    3.00   0.00
+island*              2 124    1.00   0.00    1.0    1.00   0.00
+bill_length_mm       3 123   47.50   3.08   47.3   47.38   3.11
+bill_depth_mm        4 123   14.98   0.98   15.0   14.94   1.19
+flipper_length_mm    5 123  217.19   6.48  216.0  216.83   5.93
+body_mass_g          6 123 5076.02 504.12 5000.0 5073.48 555.98
+sex*                 7 119    1.51   0.50    2.0    1.52   0.00
+year                 8 124 2008.08   0.79 2008.0 2008.10   1.48
+                     min    max  range  skew kurtosis    se
+species*             3.0    3.0    0.0   NaN      NaN  0.00
+island*              1.0    1.0    0.0   NaN      NaN  0.00
+bill_length_mm      40.9   59.6   18.7  0.64     1.13  0.28
+bill_depth_mm       13.1   17.3    4.2  0.32    -0.65  0.09
+flipper_length_mm  203.0  231.0   28.0  0.39    -0.64  0.58
+body_mass_g       3950.0 6300.0 2350.0  0.07    -0.78 45.45
+sex*                 1.0    2.0    1.0 -0.05    -2.01  0.05
+year              2007.0 2009.0    2.0 -0.14    -1.41  0.07</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>penguins</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
+  <span class='fu'><a href='https://rdrr.io/r/stats/na.fail.html'>na.omit</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>bill_depth_mm</span>, y <span class='op'>=</span> <span class='va'>bill_length_mm</span><span class='op'>)</span><span class='op'>)</span><span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='va'>species</span><span class='op'>)</span><span class='op'>)</span><span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_minimal</a></span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+<img src="creating-general-data-simulation-tools_files/figure-html5/unnamed-chunk-1-1.png" width="624" />
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>samp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Chisquare.html'>rchisq</a></span><span class='op'>(</span><span class='fl'>600</span>,df<span class='op'>=</span><span class='fl'>3</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://rdrr.io/r/stats/qqnorm.html'>qqplot</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Chisquare.html'>qchisq</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/ppoints.html'>ppoints</a></span><span class='op'>(</span><span class='fl'>500</span><span class='op'>)</span>,df<span class='op'>=</span><span class='fl'>3</span><span class='op'>)</span>,<span class='va'>samp</span><span class='op'>)</span>
+</code></pre>
+</div>
+<img src="creating-general-data-simulation-tools_files/figure-html5/unnamed-chunk-1-2.png" width="624" />
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>gentoo</span> <span class='op'>&lt;-</span> <span class='va'>penguins</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
+  <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>species</span> <span class='op'>==</span> <span class='st'>"Gentoo"</span><span class='op'>)</span>
+
+
+<span class='co'># are my numerics normal? </span>
+<span class='va'>nums</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span>n<span class='op'>=</span><span class='fl'>124</span>,mean<span class='op'>=</span><span class='fl'>47.50</span>,sd<span class='op'>=</span><span class='fl'>3.08</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://rdrr.io/pkg/psych/man/describe.html'>describe</a></span><span class='op'>(</span><span class='va'>nums</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>   vars   n  mean   sd median trimmed  mad   min   max range  skew
+X1    1 124 47.39 3.32  47.46   47.49 3.16 37.72 54.86 17.14 -0.26
+   kurtosis  se
+X1     0.06 0.3</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>gentoo</span><span class='op'>$</span><span class='va'>bill_length_mm</span>
+</code></pre>
+</div>
+<pre><code>  [1] 46.1 50.0 48.7 50.0 47.6 46.5 45.4 46.7 43.3 46.8 40.9 49.0 45.5
+ [14] 48.4 45.8 49.3 42.0 49.2 46.2 48.7 50.2 45.1 46.5 46.3 42.9 46.1
+ [27] 44.5 47.8 48.2 50.0 47.3 42.8 45.1 59.6 49.1 48.4 42.6 44.4 44.0
+ [40] 48.7 42.7 49.6 45.3 49.6 50.5 43.6 45.5 50.5 44.9 45.2 46.6 48.5
+ [53] 45.1 50.1 46.5 45.0 43.8 45.5 43.2 50.4 45.3 46.2 45.7 54.3 45.8
+ [66] 49.8 46.2 49.5 43.5 50.7 47.7 46.4 48.2 46.5 46.4 48.6 47.5 51.1
+ [79] 45.2 45.2 49.1 52.5 47.4 50.0 44.9 50.8 43.4 51.3 47.5 52.1 47.5
+ [92] 52.2 45.5 49.5 44.5 50.8 49.4 46.9 48.4 51.1 48.5 55.9 47.2 49.1
+[105] 47.3 46.8 41.7 53.4 43.3 48.1 50.5 49.8 43.5 51.5 46.2 55.1 44.5
+[118] 48.8 47.2   NA 46.8 50.4 45.2 49.9</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/psych/man/describe.html'>describe</a></span><span class='op'>(</span><span class='va'>gentoo</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>                  vars   n    mean     sd median trimmed    mad
+species*             1 124    3.00   0.00    3.0    3.00   0.00
+island*              2 124    1.00   0.00    1.0    1.00   0.00
+bill_length_mm       3 123   47.50   3.08   47.3   47.38   3.11
+bill_depth_mm        4 123   14.98   0.98   15.0   14.94   1.19
+flipper_length_mm    5 123  217.19   6.48  216.0  216.83   5.93
+body_mass_g          6 123 5076.02 504.12 5000.0 5073.48 555.98
+sex*                 7 119    1.51   0.50    2.0    1.52   0.00
+year                 8 124 2008.08   0.79 2008.0 2008.10   1.48
+                     min    max  range  skew kurtosis    se
+species*             3.0    3.0    0.0   NaN      NaN  0.00
+island*              1.0    1.0    0.0   NaN      NaN  0.00
+bill_length_mm      40.9   59.6   18.7  0.64     1.13  0.28
+bill_depth_mm       13.1   17.3    4.2  0.32    -0.65  0.09
+flipper_length_mm  203.0  231.0   28.0  0.39    -0.64  0.58
+body_mass_g       3950.0 6300.0 2350.0  0.07    -0.78 45.45
+sex*                 1.0    2.0    1.0 -0.05    -2.01  0.05
+year              2007.0 2009.0    2.0 -0.14    -1.41  0.07</code></pre>
+</div>
+<p>Goal of this tutorial: creating a general purpose function for
+mocking up datasets!</p>
+<p>Our first targeted dataset is palmers penguins, however we will then
+look at more complex composite datasets, and randomness.</p>
+<p>Step 1: analyze the existing dataset- for our purposes, we will be
+matching *insert data types that will be included here, and how we are
+matching.</p>
+<p>Taking an intial look at the data, an intuitive sense may be that the
+numbers we’re seeing have something some distinctions that might be
+important to capture - let’s try an obvious one, and try our descriptive
+statistics grouped by species.</p>
+<p>As it turns out, there are some differences (maybe not significant
+but we’ll find out) in our data! Again, let’s look at our selected data
+and sample to create our distribution to create it from - Adelie
+penguins, for simplicity sake!</p>
+<p>At this point we can make</p>
+<p>Mimicing using stats functions, create as wrappers essentially.</p>
+<p>#General workflow- overall goal is return a dataframe? Why not at
+this point Looping through df, understand intended distribution level to
+work with 1. Data Type?</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
