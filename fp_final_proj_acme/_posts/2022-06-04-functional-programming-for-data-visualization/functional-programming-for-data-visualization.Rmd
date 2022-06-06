@@ -34,7 +34,8 @@ will create a function to generate this data. The function has 5 formals or argu
 4.    **levels** - A numeric vector that lists the numeric number tied to each response. It should start with 1 and end with the max number specified.
 5.    **labels** - A character vector with the labels attached to the numeric values.
   
-The function below also provides an error message in case certain formals are not specified correctly. 
+The function below also provides an error message in case certain formals are not specified correctly.
+
 ```{r simulate}
 likert_sim <- function(max, n, weights, levels,labels) {
   if ((length(levels) == length(labels)) & (length(weights) == max))  {

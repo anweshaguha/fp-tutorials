@@ -50,16 +50,17 @@ pre.numberSource code > span > a:first-child::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {   }
+  { color: #00769e; background-color: #f1f3f5; }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
+code span { color: #00769e; } /* Normal */
 code span.al { color: #ad0000; } /* Alert */
 code span.an { color: #5e5e5e; } /* Annotation */
-code span.at { } /* Attribute */
+code span.at { color: #657422; } /* Attribute */
 code span.bn { color: #ad0000; } /* BaseN */
 code span.bu { } /* BuiltIn */
-code span.cf { color: #007ba5; } /* ControlFlow */
+code span.cf { color: #00769e; } /* ControlFlow */
 code span.ch { color: #20794d; } /* Char */
 code span.cn { color: #8f5902; } /* Constant */
 code span.co { color: #5e5e5e; } /* Comment */
@@ -73,9 +74,9 @@ code span.fl { color: #ad0000; } /* Float */
 code span.fu { color: #4758ab; } /* Function */
 code span.im { } /* Import */
 code span.in { color: #5e5e5e; } /* Information */
-code span.kw { color: #007ba5; } /* Keyword */
+code span.kw { color: #00769e; } /* Keyword */
 code span.op { color: #5e5e5e; } /* Operator */
-code span.ot { color: #007ba5; } /* Other */
+code span.ot { color: #00769e; } /* Other */
 code span.pp { color: #ad0000; } /* Preprocessor */
 code span.sc { color: #5e5e5e; } /* SpecialChar */
 code span.ss { color: #20794d; } /* SpecialString */
@@ -117,7 +118,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["functional-programming-for-data-visualization_files/figure-html5/unnamed-chunk-7-1.png","functional-programming-for-data-visualization_files/figure-html5/unnamed-chunk-8-1.png"]}
+  {"type":"character","attributes":{},"value":["functional-programming-for-data-visualization_files/anchor-4.2.2/anchor.min.js","functional-programming-for-data-visualization_files/bowser-1.9.3/bowser.min.js","functional-programming-for-data-visualization_files/distill-2.2.21/template.v2.js","functional-programming-for-data-visualization_files/figure-html5/unnamed-chunk-7-1.png","functional-programming-for-data-visualization_files/figure-html5/unnamed-chunk-8-1.png","functional-programming-for-data-visualization_files/header-attrs-2.14/header-attrs.js","functional-programming-for-data-visualization_files/jquery-3.6.0/jquery-3.6.0.js","functional-programming-for-data-visualization_files/jquery-3.6.0/jquery-3.6.0.min.js","functional-programming-for-data-visualization_files/jquery-3.6.0/jquery-3.6.0.min.map","functional-programming-for-data-visualization_files/popper-2.6.0/popper.min.js","functional-programming-for-data-visualization_files/tippy-6.2.7/tippy-bundle.umd.min.js","functional-programming-for-data-visualization_files/tippy-6.2.7/tippy-light-border.css","functional-programming-for-data-visualization_files/tippy-6.2.7/tippy.css","functional-programming-for-data-visualization_files/tippy-6.2.7/tippy.umd.min.js","functional-programming-for-data-visualization_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -429,10 +430,6 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
     position: relative;
     margin-bottom: 2.5em;
     margin-top: 1.5em;
-  }
-
-  .figure img {
-    width: 100%;
   }
 
   .figure .caption {
@@ -1264,6 +1261,12 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
       // hoverable references
       $('span.citation[data-cites]').each(function() {
+        if ($(this).children()[0].nodeName == "D-FOOTNOTE") {
+          var fn = $(this).children()[0]
+          $(this).html(fn.shadowRoot.querySelector("sup"))
+          $(this).id = fn.id
+          fn.remove()
+        }
         var refs = $(this).attr('data-cites').split(" ");
         var refHtml = refs.map(function(ref) {
           return "<p>" + $('#ref-' + ref).html() + "</p>";
@@ -1278,6 +1281,31 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
           placement: 'bottom-start'
         });
       });
+
+      // fix footnotes in tables (#411)
+      // replacing broken distill.pub feature
+      $('table d-footnote').each(function() {
+        // we replace internal showAtNode methode which is triggered when hovering a footnote
+        this.hoverBox.showAtNode = function(node) {
+          // ported from https://github.com/distillpub/template/pull/105/files
+          calcOffset = function(elem) {
+              let x = elem.offsetLeft;
+              let y = elem.offsetTop;
+              // Traverse upwards until an `absolute` element is found or `elem`
+              // becomes null.
+              while (elem = elem.offsetParent && elem.style.position != 'absolute') {
+                  x += elem.offsetLeft;
+                  y += elem.offsetTop;
+              }
+
+              return { left: x, top: y };
+          }
+          // https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/offsetTop
+          const bbox = node.getBoundingClientRect();
+          const offset = calcOffset(node);
+          this.show([offset.left + bbox.width, offset.top + bbox.height]);
+        }
+      })
 
       // clear polling timer
       clearInterval(tid);
@@ -1377,6 +1405,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
     // mark non-body figures created by knitr chunks as 100% width
     $('.layout-chunk').each(function(i, val) {
       var figures = $(this).find('img, .html-widget');
+      // ignore leaflet img layers (#106)
+      figures = figures.filter(':not(img[class*="leaflet"])')
       if ($(this).attr('data-layout') !== "l-body") {
         figures.css('width', '100%');
       } else {
@@ -1399,7 +1429,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
     // get rid of index.html references in header
     if (window.location.protocol !== "file:") {
       $('.distill-site-header a[href]').each(function(i,val) {
-        $(this).attr('href', $(this).attr('href').replace("index.html", "./"));
+        $(this).attr('href', $(this).attr('href').replace(/^index[.]html/, "./"));
       });
     }
 
@@ -1438,7 +1468,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </script>
 
   <!--/radix_placeholder_distill-->
-  <script src="functional-programming-for-data-visualization_files/header-attrs-2.14/header-attrs.js"></script>
+  <script src="functional-programming-for-data-visualization_files/header-attrs-2.11/header-attrs.js"></script>
   <script src="functional-programming-for-data-visualization_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
   <script src="functional-programming-for-data-visualization_files/popper-2.6.0/popper.min.js"></script>
   <link href="functional-programming-for-data-visualization_files/tippy-6.2.7/tippy.css" rel="stylesheet" />
@@ -1476,41 +1506,24 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 
 <div class="d-byline">
-  Manuel Vazquez <a href="https://example.com/norajones"
-class="uri">https://example.com/norajones</a> 
+  Manuel Vazquez <a href="https://example.com/norajones" class="uri">https://example.com/norajones</a> 
   
 <br/>2022-06-04
 </div>
 
 <div class="d-article">
 <h2 id="introduction">Introduction</h2>
-<p>This tutorial will walk through an applied example to show how to
-simulate survey data and create a function to graph survey data using
-divergent, stacked bar charts. Creating this function would allow the
-user to graph survey data to any of their liking!</p>
+<p>This tutorial will walk through an applied example to show how to simulate survey data and create a function to graph survey data using divergent, stacked bar charts. Creating this function would allow the user to graph survey data to any of their liking!</p>
 <h2 id="simulating-data">Simulating data</h2>
-<p>We begin by simulating some survey data. We will simulate responses
-to 5 questions that use a likert item with a scale of one to four. To
-ease the simulation of the data, we will create a function to generate
-this data. The function has 5 formals or arguments:</p>
+<p>We begin by simulating some survey data. We will simulate responses to 5 questions that use a likert item with a scale of one to four. To ease the simulation of the data, we will create a function to generate this data. The function has 5 formals or arguments:</p>
 <ol type="1">
-<li><strong>max</strong> - An integer that represents the maximum of the
-likert scale. Since the items we are developing are on a 4 point scale,
-then we will add 4. If we wanted to simulate items on a 7 point scale,
-then we would add a 7 to this argument.</li>
-<li><strong>n</strong> - An integer that represents the total number
-observations that the user wishes to generate</li>
-<li><strong>weights</strong> - A list of weights that the user specifies
-to influence the frequency of certain responses. The length of the
-vector should be equal to the max.</li>
-<li><strong>levels</strong> - A numeric vector that lists the numeric
-number tied to each response. It should start with 1 and end with the
-max number specified.</li>
-<li><strong>labels</strong> - A character vector with the labels
-attached to the numeric values.</li>
+<li><strong>max</strong> - An integer that represents the maximum of the likert scale. Since the items we are developing are on a 4 point scale, then we will add 4. If we wanted to simulate items on a 7 point scale, then we would add a 7 to this argument.</li>
+<li><strong>n</strong> - An integer that represents the total number observations that the user wishes to generate</li>
+<li><strong>weights</strong> - A list of weights that the user specifies to influence the frequency of certain responses. The length of the vector should be equal to the max.</li>
+<li><strong>levels</strong> - A numeric vector that lists the numeric number tied to each response. It should start with 1 and end with the max number specified.</li>
+<li><strong>labels</strong> - A character vector with the labels attached to the numeric values.</li>
 </ol>
-The function below also provides an error message in case certain
-formals are not specified correctly.
+<p>The function below also provides an error message in case certain formals are not specified correctly.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>likert_sim</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>max</span>, <span class='va'>n</span>, <span class='va'>weights</span>, <span class='va'>levels</span>,<span class='va'>labels</span><span class='op'>)</span> <span class='op'>{</span>
@@ -1529,11 +1542,7 @@ formals are not specified correctly.
 </code></pre>
 </div>
 </div>
-<p>Using this function, we simulate the data for five questions which we
-call q1… to q5. The sample scale we will simulate will be a 4 point
-agreement scale ranging from strongly disagree to strongly agree. Before
-running the function, we define the levels and the labels. Again, the
-lengths of each of these vectors should be similar.</p>
+<p>Using this function, we simulate the data for five questions which we call q1… to q5. The sample scale we will simulate will be a 4 point agreement scale ranging from strongly disagree to strongly agree. Before running the function, we define the levels and the labels. Again, the lengths of each of these vectors should be similar.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>levels</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>4</span><span class='op'>)</span>
@@ -1541,12 +1550,7 @@ lengths of each of these vectors should be similar.</p>
 </code></pre>
 </div>
 </div>
-<p>Below, we use the simulate function we just created to generate 5
-simulated responses with varying weights in responses. To do this, we
-use the levels and labels vectors defined above and plug those in to the
-function we defined. We define a matrix with variying weights that we
-will use in the function. We will use the map command to loop through
-the function five times, and generate a list with five items.</p>
+<p>Below, we use the simulate function we just created to generate 5 simulated responses with varying weights in responses. To do this, we use the levels and labels vectors defined above and plug those in to the function we defined. We define a matrix with variying weights that we will use in the function. We will use the map command to loop through the function five times, and generate a list with five items.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>allWeights</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>.20</span>,<span class='fl'>.30</span>,<span class='fl'>.25</span>,<span class='fl'>.25</span>,
@@ -1560,9 +1564,7 @@ the function five times, and generate a list with five items.</p>
 </code></pre>
 </div>
 </div>
-<p>After we simulate this data, we bind it together into a data frame
-and generate a random respone ID. The data is now ready to be
-graphed!</p>
+<p>After we simulate this data, we bind it together into a data frame and generate a random respone ID. The data is now ready to be graphed!</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>surveydf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://purrr.tidyverse.org/reference/reduce.html'>reduce</a></span><span class='op'>(</span><span class='va'>allQ</span>, <span class='va'>cbind</span><span class='op'>)</span> 
@@ -1574,23 +1576,12 @@ graphed!</p>
 </code></pre>
 </div>
 </div>
-<h2 id="create-a-function-to-graph-the-data">Create a function to graph
-the data</h2>
-<p>Now that we have the data simulated, we are ready to graph. In order
-to create a divergent horizontal bar chart, we need to take on two
-steps. First, we need to transform the data so that it summarizes mean
-responses and it is in a format that allows for graphing in bar format.
-This means that we need to summarize and pivot the data in a long
-format. After we summarize and prep the data, we move on to second step
-which is to actually graph the data using <em>ggplot</em>. We will
-create a function that corresponds to each of these two steps, and then
-apply those two functions together to graph the information.</p>
-<p>To begin, we will create a function that collapses and pivots the
-data. The function has 4 arguments:</p>
+<h2 id="create-a-function-to-graph-the-data">Create a function to graph the data</h2>
+<p>Now that we have the data simulated, we are ready to graph. In order to create a divergent horizontal bar chart, we need to take on two steps. First, we need to transform the data so that it summarizes mean responses and it is in a format that allows for graphing in bar format. This means that we need to summarize and pivot the data in a long format. After we summarize and prep the data, we move on to second step which is to actually graph the data using <em>ggplot</em>. We will create a function that corresponds to each of these two steps, and then apply those two functions together to graph the information.</p>
+<p>To begin, we will create a function that collapses and pivots the data. The function has 4 arguments:</p>
 <ol type="1">
 <li><strong>df </strong> - specifies the data frame to be used,</li>
-<li><strong>cols</strong> - is a list of the name of the columns we wish
-to include,</li>
+<li><strong>cols</strong> - is a list of the name of the columns we wish to include,</li>
 <li><strong>labels</strong> - Labels of the responses</li>
 <li><strong>levels</strong> - Numeric values of the responses</li>
 </ol>
@@ -1615,32 +1606,24 @@ to include,</li>
 </code></pre>
 </div>
 </div>
-<p>Here, we use the <em>head</em> command to check how well the function
-works. Note that for the last two arguments — labels and levels — I am
-using the vectors that were defined earlier in the data simulation step.
-You will notice that the percent_answers column has some negative
-answers. This was done on purpose so that responses that are more
-negative fall to the left of zero. This is needed in order to graph the
-likert items in a divergent bar chart.</p>
+<p>Here, we use the <em>head</em> command to check how well the function works. Note that for the last two arguments — labels and levels — I am using the vectors that were defined earlier in the data simulation step. You will notice that the percent_answers column has some negative answers. This was done on purpose so that responses that are more negative fall to the left of zero. This is needed in order to graph the likert items in a divergent bar chart.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'>summ_likert</span><span class='op'>(</span><span class='va'>surveydf</span>,<span class='va'>q1</span>,<span class='va'>q5</span>,<span class='va'>labels</span>,<span class='va'>levels</span><span class='op'>)</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code># A tibble: 6 x 4
+<pre><code># A tibble: 6 × 4
 # Groups:   question [2]
   question frequency         n_answers percent_answers
   &lt;chr&gt;    &lt;fct&gt;                 &lt;int&gt;           &lt;dbl&gt;
-1 q1       Strongly disagree        48             -19
-2 q1       Disagree                 79             -32
-3 q1       Agree                    60              24
-4 q1       Strongly agree           63              25
-5 q2       Strongly disagree        24             -10
-6 q2       Disagree                135             -54</code></pre>
+1 q1       Strongly disagree        46             -18
+2 q1       Disagree                 83             -33
+3 q1       Agree                    57              23
+4 q1       Strongly agree           64              26
+5 q2       Strongly disagree        20              -8
+6 q2       Disagree                123             -49</code></pre>
 </div>
-<p>Next, we define a function to graph the data. The function will only
-have one argument, <strong>df</strong>. This argument refers to the data
-frame</p>
+<p>Next, we define a function to graph the data. The function will only have one argument, <strong>df</strong>. This argument refers to the data frame</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>graph_likert</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span> <span class='op'>{</span>
@@ -1667,12 +1650,7 @@ frame</p>
 </div>
 </div>
 <h2 id="apply-the-function">Apply the function</h2>
-<p>Finally, we can apply the function to graph the simulated data. We
-can do this by using the function that pivots the data
-(<em>summ_likert</em>) and pass through the function that graphs the
-data (<em>graph_likert</em>), and that is it! If you have multiple
-questions, you can reuse this function and reduce the code you
-write!</p>
+<p>Finally, we can apply the function to graph the simulated data. We can do this by using the function that pivots the data (<em>summ_likert</em>) and pass through the function that graphs the data (<em>graph_likert</em>), and that is it! If you have multiple questions, you can reuse this function and reduce the code you write!</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>summ_likert</span><span class='op'>(</span><span class='va'>surveydf</span>,<span class='va'>q1</span>,<span class='va'>q5</span>,<span class='va'>labels</span>,<span class='va'>levels</span><span class='op'>)</span> <span class='op'><a href='https://purrr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
@@ -1681,9 +1659,7 @@ write!</p>
 </div>
 <p><img src="functional-programming-for-data-visualization_files/figure-html5/unnamed-chunk-7-1.png" width="624" /></p>
 </div>
-<p>You can also add some further customization to make the graph easier
-to read. For example, I can add a title and subtitle to the graph as
-well as meaningful x labels to the graph.</p>
+<p>You can also add some further customization to make the graph easier to read. For example, I can add a title and subtitle to the graph as well as meaningful x labels to the graph.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>summ_likert</span><span class='op'>(</span><span class='va'>surveydf</span>,<span class='va'>q1</span>,<span class='va'>q5</span>,<span class='va'>labels</span>,<span class='va'>levels</span><span class='op'>)</span> <span class='op'><a href='https://purrr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
@@ -1701,8 +1677,7 @@ well as meaningful x labels to the graph.</p>
 </div>
 <p><img src="functional-programming-for-data-visualization_files/figure-html5/unnamed-chunk-8-1.png" width="624" /></p>
 </div>
-<div class="sourceCode" id="cb2"><pre
-class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
