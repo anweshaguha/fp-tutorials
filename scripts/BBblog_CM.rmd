@@ -26,9 +26,9 @@ Let's start by loading the following packages: purrr, tidyverse, and
 repurrrsive. Take a moment to use ?package name to find out what each package 
 does.
 
-Next we need to set up a directory for the csv files that we will be using.
+Next we need to set up a directory for the csv files that we will be using. Note, I am specifically showing you how to set a directory rather than using the here function, but all modified files are available on our github site and at the original files at the link above.
 ```{r}
-BBdata_dir <- "/Users/cassiemalcom/Desktop/CM2020/22_Spring Term Classes/EDLD 653_DS3/EDLD653_r/Lego"
+BBdata_dir <- "/Users/cassiemalcom/Desktop/CM2020/22_Spring Term Classes/EDLD 653_DS3/fp-tutorials/Lego"
 ```
 
 I've already prepped two of the files for our use today by making sure there is an ID column that matches. We can see what the csv files are by listing them and using regexp to exclude any non-csv files.
