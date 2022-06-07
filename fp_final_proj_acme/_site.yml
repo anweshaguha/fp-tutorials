@@ -5,6 +5,8 @@ description: |
 output_dir: "docs"
 navbar:
   right:
+    - text: "Building Blocks"
+      href: building-blocks-o-functional-programming.html
     - text: "Data Visualization"
       href: functional-programming-for-data-visualization.html
     - text: "Data Simulation"
