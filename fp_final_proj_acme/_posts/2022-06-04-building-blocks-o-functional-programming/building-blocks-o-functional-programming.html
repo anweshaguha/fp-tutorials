@@ -50,17 +50,16 @@ pre.numberSource code > span > a:first-child::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  { color: #00769e; background-color: #f1f3f5; }
+  {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span { color: #00769e; } /* Normal */
 code span.al { color: #ad0000; } /* Alert */
 code span.an { color: #5e5e5e; } /* Annotation */
-code span.at { color: #657422; } /* Attribute */
+code span.at { } /* Attribute */
 code span.bn { color: #ad0000; } /* BaseN */
 code span.bu { } /* BuiltIn */
-code span.cf { color: #00769e; } /* ControlFlow */
+code span.cf { color: #007ba5; } /* ControlFlow */
 code span.ch { color: #20794d; } /* Char */
 code span.cn { color: #8f5902; } /* Constant */
 code span.co { color: #5e5e5e; } /* Comment */
@@ -74,9 +73,9 @@ code span.fl { color: #ad0000; } /* Float */
 code span.fu { color: #4758ab; } /* Function */
 code span.im { } /* Import */
 code span.in { color: #5e5e5e; } /* Information */
-code span.kw { color: #00769e; } /* Keyword */
+code span.kw { color: #007ba5; } /* Keyword */
 code span.op { color: #5e5e5e; } /* Operator */
-code span.ot { color: #00769e; } /* Other */
+code span.ot { color: #007ba5; } /* Other */
 code span.pp { color: #ad0000; } /* Preprocessor */
 code span.sc { color: #5e5e5e; } /* SpecialChar */
 code span.ss { color: #20794d; } /* SpecialString */
@@ -118,7 +117,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["building-blocks-o-functional-programming_files/anchor-4.2.2/anchor.min.js","building-blocks-o-functional-programming_files/bowser-1.9.3/bowser.min.js","building-blocks-o-functional-programming_files/distill-2.2.21/template.v2.js","building-blocks-o-functional-programming_files/header-attrs-2.11/header-attrs.js","building-blocks-o-functional-programming_files/jquery-3.6.0/jquery-3.6.0.js","building-blocks-o-functional-programming_files/jquery-3.6.0/jquery-3.6.0.min.js","building-blocks-o-functional-programming_files/jquery-3.6.0/jquery-3.6.0.min.map","building-blocks-o-functional-programming_files/popper-2.6.0/popper.min.js","building-blocks-o-functional-programming_files/tippy-6.2.7/tippy-bundle.umd.min.js","building-blocks-o-functional-programming_files/tippy-6.2.7/tippy-light-border.css","building-blocks-o-functional-programming_files/tippy-6.2.7/tippy.css","building-blocks-o-functional-programming_files/tippy-6.2.7/tippy.umd.min.js","building-blocks-o-functional-programming_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["building-blocks-o-functional-programming_files/anchor-4.2.2/anchor.min.js","building-blocks-o-functional-programming_files/bowser-1.9.3/bowser.min.js","building-blocks-o-functional-programming_files/distill-2.2.21/template.v2.js","building-blocks-o-functional-programming_files/header-attrs-2.11/header-attrs.js","building-blocks-o-functional-programming_files/header-attrs-2.14/header-attrs.js","building-blocks-o-functional-programming_files/jquery-3.6.0/jquery-3.6.0.js","building-blocks-o-functional-programming_files/jquery-3.6.0/jquery-3.6.0.min.js","building-blocks-o-functional-programming_files/jquery-3.6.0/jquery-3.6.0.min.map","building-blocks-o-functional-programming_files/popper-2.6.0/popper.min.js","building-blocks-o-functional-programming_files/tippy-6.2.7/tippy-bundle.umd.min.js","building-blocks-o-functional-programming_files/tippy-6.2.7/tippy-light-border.css","building-blocks-o-functional-programming_files/tippy-6.2.7/tippy.css","building-blocks-o-functional-programming_files/tippy-6.2.7/tippy.umd.min.js","building-blocks-o-functional-programming_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -430,6 +429,10 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
     position: relative;
     margin-bottom: 2.5em;
     margin-top: 1.5em;
+  }
+
+  .figure img {
+    width: 100%;
   }
 
   .figure .caption {
@@ -1261,12 +1264,6 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
       // hoverable references
       $('span.citation[data-cites]').each(function() {
-        if ($(this).children()[0].nodeName == "D-FOOTNOTE") {
-          var fn = $(this).children()[0]
-          $(this).html(fn.shadowRoot.querySelector("sup"))
-          $(this).id = fn.id
-          fn.remove()
-        }
         var refs = $(this).attr('data-cites').split(" ");
         var refHtml = refs.map(function(ref) {
           return "<p>" + $('#ref-' + ref).html() + "</p>";
@@ -1281,31 +1278,6 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
           placement: 'bottom-start'
         });
       });
-
-      // fix footnotes in tables (#411)
-      // replacing broken distill.pub feature
-      $('table d-footnote').each(function() {
-        // we replace internal showAtNode methode which is triggered when hovering a footnote
-        this.hoverBox.showAtNode = function(node) {
-          // ported from https://github.com/distillpub/template/pull/105/files
-          calcOffset = function(elem) {
-              let x = elem.offsetLeft;
-              let y = elem.offsetTop;
-              // Traverse upwards until an `absolute` element is found or `elem`
-              // becomes null.
-              while (elem = elem.offsetParent && elem.style.position != 'absolute') {
-                  x += elem.offsetLeft;
-                  y += elem.offsetTop;
-              }
-
-              return { left: x, top: y };
-          }
-          // https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/offsetTop
-          const bbox = node.getBoundingClientRect();
-          const offset = calcOffset(node);
-          this.show([offset.left + bbox.width, offset.top + bbox.height]);
-        }
-      })
 
       // clear polling timer
       clearInterval(tid);
@@ -1405,8 +1377,6 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
     // mark non-body figures created by knitr chunks as 100% width
     $('.layout-chunk').each(function(i, val) {
       var figures = $(this).find('img, .html-widget');
-      // ignore leaflet img layers (#106)
-      figures = figures.filter(':not(img[class*="leaflet"])')
       if ($(this).attr('data-layout') !== "l-body") {
         figures.css('width', '100%');
       } else {
@@ -1429,7 +1399,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
     // get rid of index.html references in header
     if (window.location.protocol !== "file:") {
       $('.distill-site-header a[href]').each(function(i,val) {
-        $(this).attr('href', $(this).attr('href').replace(/^index[.]html/, "./"));
+        $(this).attr('href', $(this).attr('href').replace("index.html", "./"));
       });
     }
 
@@ -1468,7 +1438,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </script>
 
   <!--/radix_placeholder_distill-->
-  <script src="building-blocks-o-functional-programming_files/header-attrs-2.11/header-attrs.js"></script>
+  <script src="building-blocks-o-functional-programming_files/header-attrs-2.14/header-attrs.js"></script>
   <script src="building-blocks-o-functional-programming_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
   <script src="building-blocks-o-functional-programming_files/popper-2.6.0/popper.min.js"></script>
   <link href="building-blocks-o-functional-programming_files/tippy-6.2.7/tippy.css" rel="stylesheet" />
@@ -1502,27 +1472,41 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <h1>Building Blocks of Functional Programming</h1>
 <!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
-<p><p>Walk through of basic data structure explorations using map</p></p>
+<p><p>Walk through of basic data structure explorations using
+map</p></p>
 </div>
 
 <div class="d-byline">
-  Cassie Malcolm <a href="https://example.com/norajones" class="uri">https://example.com/norajones</a> 
+  Cassie Malcolm <a href="https://example.com/norajones"
+class="uri">https://example.com/norajones</a> 
   
 <br/>2022-06-04
 </div>
 
 <div class="d-article">
 <p><img src="../Lego/legos.jpg" /></p>
-<p>Hello, and welcome - I assume you are here because you want to learn more about data science and in particular functional programming. This blog is designed to help you proceed on your data science path by providing an introduction to the basic building blocks of functional programming. We’ll be working with a freely available data set on Legos©, which you can find here <a href="https://www.kaggle.com/datasets/rtatman/lego-database?resource=download" class="uri">https://www.kaggle.com/datasets/rtatman/lego-database?resource=download</a>.</p>
-<p>Let’s start by loading the following packages: purrr, tidyverse, and repurrrsive. Take a moment to use ?package name to find out what each package does.</p>
-<p>Next we need to set up a directory for the csv files that we will be using.</p>
+<p>Hello, and welcome - I assume you are here because you want to learn
+more about data science and in particular functional programming. This
+blog is designed to help you proceed on your data science path by
+providing an introduction to the basic building blocks of functional
+programming. We’ll be working with a freely available data set on
+Legos©, which you can find here <a
+href="https://www.kaggle.com/datasets/rtatman/lego-database?resource=download"
+class="uri">https://www.kaggle.com/datasets/rtatman/lego-database?resource=download</a>.</p>
+<p>Let’s start by loading the following packages: purrr, tidyverse, and
+repurrrsive. Take a moment to use ?package name to find out what each
+package does.</p>
+<p>Next we need to set up a directory for the csv files that we will be
+using.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>BBdata_dir</span> <span class='op'>&lt;-</span> <span class='fu'>here</span><span class='op'>(</span><span class='st'>"Lego"</span><span class='op'>)</span>
 </code></pre>
 </div>
 </div>
-<p>I’ve already prepped two of the files for our use today by making sure there is an ID column that matches. We can see what the csv files are by listing them and using regexp to exclude any non-csv files.</p>
+<p>I’ve already prepped two of the files for our use today by making
+sure there is an ID column that matches. We can see what the csv files
+are by listing them and using regexp to exclude any non-csv files.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>BBcsv</span> <span class='op'>&lt;-</span> <span class='fu'>fs</span><span class='fu'>::</span><span class='fu'><a href='https://fs.r-lib.org/reference/dir_ls.html'>dir_ls</a></span><span class='op'>(</span><span class='va'>BBdata_dir</span>, regexp <span class='op'>=</span> <span class='st'>"\\.csv$"</span><span class='op'>)</span>
@@ -1530,10 +1514,15 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <span class='va'>BBcsv</span>
 </code></pre>
 </div>
-<pre><code>/Users/aguha/Documents/r_projects/edld653-22/fp_collab/fp-tutorials/fp_final_proj_acme/Lego/colors2.csv
-/Users/aguha/Documents/r_projects/edld653-22/fp_collab/fp-tutorials/fp_final_proj_acme/Lego/inventory_parts.csv</code></pre>
+<pre><code>C:/Users/errol/Documents/GitHub/fp-tutorials/fp_final_proj_acme/Lego/colors2.csv
+C:/Users/errol/Documents/GitHub/fp-tutorials/fp_final_proj_acme/Lego/inventory_parts.csv</code></pre>
 </div>
-<p>Next we’ll use one of the base functions in R, lapply, to return a list. The lapply function is one of the least restrictive in terms of output within the apply family of functions. Notice that our two csv files are being combined into one vector based on the color_id column. The function reduce from the purrr package allows us to join the csv files on a key, which in this case is “color_id”.</p>
+<p>Next we’ll use one of the base functions in R, lapply, to return a
+list. The lapply function is one of the least restrictive in terms of
+output within the apply family of functions. Notice that our two csv
+files are being combined into one vector based on the color_id column.
+The function reduce from the purrr package allows us to join the csv
+files on a key, which in this case is “color_id”.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>BBlist</span> <span class='op'>&lt;-</span> <span class='va'>BBcsv</span> <span class='op'>%&gt;%</span> 
@@ -1543,18 +1532,21 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>BBlist</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code># A tibble: 6 × 9
+<pre><code># A tibble: 6 x 9
    ...1 color_id name    rgb   is_trans inventory_id part_num quantity
   &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt; &lt;lgl&gt;           &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt;
-1     1       -1 Unknown 0033… FALSE              80 belvfai…        1
-2     1       -1 Unknown 0033… FALSE              80 belvfem…        1
-3     1       -1 Unknown 0033… FALSE              80 belvmal…        1
-4     1       -1 Unknown 0033… FALSE             214 fab6e           1
-5     1       -1 Unknown 0033… FALSE             250 belvfai…        1
-6     1       -1 Unknown 0033… FALSE             250 belvfem…        1
-# … with 1 more variable: is_spare &lt;lgl&gt;</code></pre>
+1     1       -1 Unknown 0033~ FALSE              80 belvfai~        1
+2     1       -1 Unknown 0033~ FALSE              80 belvfem~        1
+3     1       -1 Unknown 0033~ FALSE              80 belvmal~        1
+4     1       -1 Unknown 0033~ FALSE             214 fab6e           1
+5     1       -1 Unknown 0033~ FALSE             250 belvfai~        1
+6     1       -1 Unknown 0033~ FALSE             250 belvfem~        1
+# ... with 1 more variable: is_spare &lt;lgl&gt;</code></pre>
 </div>
-<p>We can confirm that this is a list with the typeof function. Lists can be very helpful as they are vectors (but NOT atomic 🤯 ones!) that allow each element to be of a different type (i.e., integer, double, logical, character).</p>
+<p>We can confirm that this is a list with the typeof function. Lists
+can be very helpful as they are vectors (but NOT atomic 🤯 ones!) that
+allow each element to be of a different type (i.e., integer, double,
+logical, character).</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/typeof.html'>typeof</a></span><span class='op'>(</span><span class='va'>BBlist</span><span class='op'>)</span>
@@ -1562,13 +1554,14 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 <pre><code>[1] &quot;list&quot;</code></pre>
 </div>
-<p>If we want to know the structure of our list we can use the below function to see our list’s elements.</p>
+<p>If we want to know the structure of our list we can use the below
+function to see our list’s elements.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>BBlist</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>spec_tbl_df [580,255 × 9] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+<pre><code>spec_tbl_df [580,255 x 9] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
  $ ...1        : num [1:580255] 1 1 1 1 1 1 1 1 1 1 ...
  $ color_id    : num [1:580255] -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 ...
  $ name        : chr [1:580255] &quot;Unknown&quot; &quot;Unknown&quot; &quot;Unknown&quot; &quot;Unknown&quot; ...
@@ -1588,13 +1581,14 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   .. )
  - attr(*, &quot;problems&quot;)=&lt;externalptr&gt; </code></pre>
 </div>
-<p>What if we want to look at a particular row and column [row, column] of our list?</p>
+<p>What if we want to look at a particular row and column [row, column]
+of our list?</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>BBlist</span><span class='op'>[</span><span class='fl'>5</span>, <span class='fl'>2</span><span class='op'>]</span>
 </code></pre>
 </div>
-<pre><code># A tibble: 1 × 1
+<pre><code># A tibble: 1 x 1
   color_id
      &lt;dbl&gt;
 1       -1</code></pre>
@@ -1607,7 +1601,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 <pre><code>[1] TRUE</code></pre>
 </div>
-<p>Since there are NAs in our list we can determine their position with the following code.</p>
+<p>Since there are NAs in our list we can determine their position with
+the following code.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/which.html'>which</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>BBlist</span><span class='op'>)</span><span class='op'>)</span>
@@ -1616,7 +1611,13 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <pre><code> [1] 3286912 3479282 3479283 3479285 3867167 4059537 4059538 4059540
  [9] 4447422 4639792 4639793 4639795 5027677 5220047 5220048 5220050</code></pre>
 </div>
-<p>Now let’s determine an artificial mean for our data set. To do this we’ll use our first functional, which is the map_chr function of the purrr package. A functional is basically a type of function whose input is also a function and whose output is a vector. In this case the function is mean, which will return the mean of each inventory_id. Using map_chr ensures that the output in the new column is of type character. Note that members of the map family return a dataframe.</p>
+<p>Now let’s determine an artificial mean for our data set. To do this
+we’ll use our first functional, which is the map_chr function of the
+purrr package. A functional is basically a type of function whose input
+is also a function and whose output is a vector. In this case the
+function is mean, which will return the mean of each inventory_id. Using
+map_chr ensures that the output in the new column is of type character.
+Note that members of the map family return a dataframe.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>BBdf</span> <span class='op'>&lt;-</span> <span class='va'>BBlist</span> <span class='op'>%&gt;%</span> 
@@ -1625,18 +1626,22 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>BBdf</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code># A tibble: 6 × 10
+<pre><code># A tibble: 6 x 10
    ...1 color_id name    rgb   is_trans inventory_id part_num quantity
   &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt; &lt;lgl&gt;           &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt;
-1     1       -1 Unknown 0033… FALSE              80 belvfai…        1
-2     1       -1 Unknown 0033… FALSE              80 belvfem…        1
-3     1       -1 Unknown 0033… FALSE              80 belvmal…        1
-4     1       -1 Unknown 0033… FALSE             214 fab6e           1
-5     1       -1 Unknown 0033… FALSE             250 belvfai…        1
-6     1       -1 Unknown 0033… FALSE             250 belvfem…        1
-# … with 2 more variables: is_spare &lt;lgl&gt;, average &lt;chr&gt;</code></pre>
+1     1       -1 Unknown 0033~ FALSE              80 belvfai~        1
+2     1       -1 Unknown 0033~ FALSE              80 belvfem~        1
+3     1       -1 Unknown 0033~ FALSE              80 belvmal~        1
+4     1       -1 Unknown 0033~ FALSE             214 fab6e           1
+5     1       -1 Unknown 0033~ FALSE             250 belvfai~        1
+6     1       -1 Unknown 0033~ FALSE             250 belvfem~        1
+# ... with 2 more variables: is_spare &lt;lgl&gt;, average &lt;chr&gt;</code></pre>
 </div>
-<p>How about determining the unique amount of each variable in our dataframe? We can use another functional! Note that purrr uses less code by using the ~ symbol to take the place of function(x), which is often used with lapply, with .x as the placeholder for the thing being looped over. In this case each variable is being looped over.</p>
+<p>How about determining the unique amount of each variable in our
+dataframe? We can use another functional! Note that purrr uses less code
+by using the ~ symbol to take the place of function(x), which is often
+used with lapply, with .x as the placeholder for the thing being looped
+over. In this case each variable is being looped over.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>map</span><span class='op'>(</span><span class='va'>BBdf</span>, <span class='op'>~</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span><span class='op'>(</span><span class='va'>.x</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
@@ -1672,7 +1677,11 @@ $is_spare
 $average
 [1] 10725</code></pre>
 </div>
-<p>Most of the time we have to look at individual building blocks before we can proceed to solving larger functional programming problems. Let’s start by determining the the number of unique times each color appears. The n column in count_colors dataframe below shows on how many different parts a color appears.</p>
+<p>Most of the time we have to look at individual building blocks before
+we can proceed to solving larger functional programming problems. Let’s
+start by determining the the number of unique times each color appears.
+The n column in count_colors dataframe below shows on how many different
+parts a color appears.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>count_colors</span> <span class='op'>&lt;-</span> <span class='fu'>count</span><span class='op'>(</span><span class='va'>BBdf</span>, <span class='va'>name</span><span class='op'>)</span>
@@ -1680,7 +1689,7 @@ $average
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>count_colors</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code># A tibble: 6 × 2
+<pre><code># A tibble: 6 x 2
   name              n
   &lt;chr&gt;         &lt;int&gt;
 1 [No Color]     2245
@@ -1690,20 +1699,29 @@ $average
 5 Blue-Violet      67
 6 Bright Green   1695</code></pre>
 </div>
-<p>Second, we can use the tally function to find the total number of parts when you consider color as a part variation. We can use this number later to test if the first function we are about to write is working correctly.</p>
+<p>Second, we can use the tally function to find the total number of
+parts when you consider color as a part variation. We can use this
+number later to test if the first function we are about to write is
+working correctly.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>count_colors</span> <span class='op'>%&gt;%</span>
   <span class='fu'>tally</span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code># A tibble: 1 × 1
+<pre><code># A tibble: 1 x 1
        n
    &lt;int&gt;
 1 580255</code></pre>
 </div>
-<p>Our first function, super exciting! Here is an overview of the parts of the below function, which is built to return a percentage.</p>
-<p><em>The function’s name is <code>my_function</code> </em>Percentage is an object that is later printed with its second usage <em>An argument x is found in the formal component of <code>(x)</code> </em>The body of the function is found between the {} <em>The function format allows us to remove scientific notation with <code>= F</code> </em>The function round allows our output to be limited to two decimal places</p>
+<p>Our first function, super exciting! Here is an overview of the parts
+of the below function, which is built to return a percentage.</p>
+<p><em>The function’s name is <code>my_function</code> </em>Percentage
+is an object that is later printed with its second usage <em>An argument
+x is found in the formal component of <code>(x)</code> </em>The body of
+the function is found between the {} <em>The function format allows us
+to remove scientific notation with <code>= F</code> </em>The function
+round allows our output to be limited to two decimal places</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>my_function</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>{</span><span class='va'>Percentage</span> <span class='op'>=</span> <span class='op'>(</span><span class='va'>x</span><span class='op'>/</span><span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span><span class='op'>*</span><span class='fl'>100</span>; <span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='va'>Percentage</span>, <span class='fl'>2</span><span class='op'>)</span>, scientific <span class='op'>=</span> <span class='cn'>F</span><span class='op'>)</span><span class='op'>}</span>
@@ -1724,12 +1742,14 @@ $average
  [81] &quot; 1.06&quot; &quot; 0.21&quot; &quot; 0.70&quot; &quot; 0.00&quot; &quot; 0.25&quot; &quot; 0.00&quot; &quot; 0.00&quot; &quot; 0.06&quot;
  [89] &quot; 0.04&quot; &quot; 8.65&quot; &quot; 2.44&quot; &quot; 0.00&quot; &quot; 0.05&quot; &quot; 0.00&quot; &quot; 0.00&quot; &quot; 0.12&quot;
  [97] &quot; 0.17&quot; &quot; 0.00&quot; &quot; 0.01&quot; &quot; 0.00&quot; &quot; 0.00&quot; &quot; 0.00&quot; &quot; 0.01&quot; &quot; 0.00&quot;
-[105] &quot; 2.36&quot; &quot; 0.00&quot; &quot; 0.00&quot; &quot; 0.00&quot; &quot; 0.38&quot; &quot; 0.00&quot; &quot; 0.08&quot; &quot; 1.32&quot;
-[113] &quot; 0.45&quot; &quot; 0.14&quot; &quot; 0.34&quot; &quot; 0.71&quot; &quot; 0.00&quot; &quot; 0.05&quot; &quot; 0.37&quot; &quot; 0.34&quot;
-[121] &quot; 0.00&quot; &quot; 0.41&quot; &quot; 0.02&quot; &quot; 0.07&quot; &quot; 0.99&quot; &quot; 0.01&quot; &quot; 0.57&quot; &quot; 0.02&quot;
+[105] &quot; 2.36&quot; &quot; 0.38&quot; &quot; 0.00&quot; &quot; 0.08&quot; &quot; 1.32&quot; &quot; 0.45&quot; &quot; 0.14&quot; &quot; 0.34&quot;
+[113] &quot; 0.71&quot; &quot; 0.00&quot; &quot; 0.05&quot; &quot; 0.37&quot; &quot; 0.34&quot; &quot; 0.00&quot; &quot; 0.41&quot; &quot; 0.02&quot;
+[121] &quot; 0.07&quot; &quot; 0.99&quot; &quot; 0.01&quot; &quot; 0.57&quot; &quot; 0.00&quot; &quot; 0.00&quot; &quot; 0.00&quot; &quot; 0.02&quot;
 [129] &quot; 0.02&quot; &quot; 0.00&quot; &quot; 0.00&quot; &quot; 0.01&quot; &quot;11.47&quot; &quot; 6.69&quot; &quot; 0.03&quot;</code></pre>
 </div>
-<p>If we want to check that our function is working correctly we can use a data point (let’s check the second data point for color Aqua) and manually determine the corresponding percentage.</p>
+<p>If we want to check that our function is working correctly we can use
+a data point (let’s check the second data point for color Aqua) and
+manually determine the corresponding percentage.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='op'>(</span><span class='fl'>96</span><span class='op'>/</span><span class='fl'>580255</span><span class='op'>)</span><span class='op'>*</span><span class='fl'>100</span>
@@ -1737,9 +1757,13 @@ $average
 </div>
 <pre><code>[1] 0.01654445</code></pre>
 </div>
-<p>Our function worked! The above number when rounded is 0.02, which is the second percentage.</p>
-<p>That wraps up our introduction to functional programming! In the next parts of the blog you’ll learn more about functions and how to perform more complex functional programming.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<p>Our function worked! The above number when rounded is 0.02, which is
+the second percentage.</p>
+<p>That wraps up our introduction to functional programming! In the next
+parts of the blog you’ll learn more about functions and how to perform
+more complex functional programming.</p>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
